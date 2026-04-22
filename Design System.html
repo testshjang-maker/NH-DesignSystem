@@ -1,0 +1,1376 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1440" />
+<title>Design System</title>
+<style>
+  @font-face { font-family: 'Pretendard'; font-weight: 100; font-style: normal; font-display: swap; src: url('fonts/Pretendard-Thin.ttf') format('truetype'); }
+  @font-face { font-family: 'Pretendard'; font-weight: 200; font-style: normal; font-display: swap; src: url('fonts/Pretendard-ExtraLight.ttf') format('truetype'); }
+  @font-face { font-family: 'Pretendard'; font-weight: 300; font-style: normal; font-display: swap; src: url('fonts/Pretendard-Light.ttf') format('truetype'); }
+  @font-face { font-family: 'Pretendard'; font-weight: 400; font-style: normal; font-display: swap; src: url('fonts/Pretendard-Regular.ttf') format('truetype'); }
+  @font-face { font-family: 'Pretendard'; font-weight: 500; font-style: normal; font-display: swap; src: url('fonts/Pretendard-Medium.ttf') format('truetype'); }
+  @font-face { font-family: 'Pretendard'; font-weight: 600; font-style: normal; font-display: swap; src: url('fonts/Pretendard-SemiBold.ttf') format('truetype'); }
+  @font-face { font-family: 'Pretendard'; font-weight: 700; font-style: normal; font-display: swap; src: url('fonts/Pretendard-Bold.ttf') format('truetype'); }
+  @font-face { font-family: 'Pretendard'; font-weight: 800; font-style: normal; font-display: swap; src: url('fonts/Pretendard-ExtraBold.ttf') format('truetype'); }
+  @font-face { font-family: 'Pretendard'; font-weight: 900; font-style: normal; font-display: swap; src: url('fonts/Pretendard-Black.ttf') format('truetype'); }
+</style>
+<style>
+  :root {
+    /* Neutral grays (from Color.ts) */
+    --gray-10:#1B212C; --gray-9:#343B46; --gray-8:#505766; --gray-7:#6D7584;
+    --gray-6:#8B93A1; --gray-5:#AFB5C2; --gray-4:#D0D5DC; --gray-3:#E4E7EC;
+    --gray-2:#F2F3F6; --gray-1:#F9F9FB; --white:#FFFFFF;
+    /* Brand purple */
+    --purple-10:#220476; --purple-9:#310099; --purple-8:#4306C6; --purple-7:#541DF0;
+    --purple-6:#6643FF; --purple-5:#857AFF; --purple-4:#B2B6FF; --purple-3:#D1D3FF;
+    --purple-2:#E5E8FF; --purple-1:#F0F0FF;
+    /* Purple-gray full scale */
+    --pg-10:#38325A; --pg-9:#5B5474; --pg-8:#9190B1; --pg-7:#A5A5C6; --pg-6:#BDBDD7;
+    --pg-5:#CDCEE4; --pg-4:#DBDBE9; --pg-3:#E9E9F0; --pg-2:#EEEDF3; --pg-1:#F4F5FA;
+    /* Blue-gray full scale */
+    --bg-10:#293942; --bg-9:#43525A; --bg-8:#5B717C; --bg-7:#849CA8; --bg-6:#A7BAC3;
+    --bg-5:#B4C8D2; --bg-4:#CFDBE1; --bg-3:#E6EBEE; --bg-2:#EAF1F5; --bg-1:#F2F6F9;
+    /* Hover / overlay layers */
+    --hover-01: #EAEBF0; --hover-02: #DBDEE4;
+    --hover-01-opacity: #AFB5C233; --hover-02-opacity: #AFB5C266;
+    --dark-layer-01: #C4CBFF33; --dark-layer-02: #C4CBFF66;
+    /* Status */
+    --red-7:#e0362b; --red-6:#f2584e; --red-4:#ffaaa4; --red-3:#fccfd1; --red-2:#fcebea; --red-1:#fff3f0;
+    --green-7:#258a5e; --green-6:#39b178; --green-2:#d2edde; --green-1:#e1f0e7;
+    --orange-7:#c96120; --orange-6:#ef8132; --orange-3:#ffd9b0; --orange-2:#ffeed9; --orange-1:#fff9f0;
+    --yellow-8:#a88019; --yellow-2:#fffde3;
+    --blue-6:#1787ee; --blue-2:#c8e4ff; --blue-1:#e4f1fd;
+    --mint-8:#237e8c; --mint-2:#dbf9f7;
+    /* Purple-gray */
+
+
+    /* Semantic tokens */
+    --text-title: var(--gray-9);
+    --text-primary: var(--gray-8);
+    --text-secondary: var(--gray-7);
+    --text-tertiary: var(--gray-6);
+    --text-placeholder: var(--gray-5);
+    --text-on-color: var(--gray-1);
+    --bg-primary: var(--white);
+    --bg-secondary: var(--gray-1);
+    --bg-tertiary: var(--gray-2);
+    --border-primary: var(--gray-3);
+    --border-focused: var(--gray-5);
+
+    /* Shadows */
+    --shadow-1: 0px 10px 10px rgba(0,0,0,0.1);
+    --shadow-2: 0px 0px 20px rgba(0,0,0,0.1);
+    --shadow-3: 0px 10px 30px rgba(0,0,0,0.1);
+    --shadow-4: 0px 4px 8px rgba(0,0,0,0.1);
+    --shadow-5: 0px 10px 30px rgba(0,0,0,0.03);
+    --shadow-6: 0px 4px 4px rgba(0,0,0,0.05);
+    --shadow-7: 0px 2px 4px rgba(0,0,0,0.05);
+    --shadow-8: 0px 4px 16px rgba(0,0,0,0.1);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background: var(--bg-secondary);
+    color: var(--text-title);
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: 'ss01';
+  }
+
+  /* Page layout */
+  .app {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+  }
+  aside {
+    position: sticky; top:0; align-self: start;
+    height: 100vh;
+    background: var(--white);
+    border-right: 1px solid var(--border-primary);
+    padding: 28px 20px;
+    overflow-y: auto;
+  }
+  .brand {
+    display:flex; align-items:center; gap:10px;
+    font-weight: 700; font-size: 15px; color: var(--gray-9);
+    padding: 2px 6px 22px;
+    letter-spacing: -0.1px;
+  }
+  .brand-dot {
+    width: 22px; height: 22px; border-radius: 6px;
+    background: linear-gradient(135deg, var(--purple-6), var(--purple-8));
+    box-shadow: var(--shadow-7);
+  }
+  .nav-group { margin-bottom: 18px; }
+  .nav-group-title {
+    font-size: 11px; font-weight: 700; color: var(--gray-6);
+    text-transform: uppercase; letter-spacing: 0.6px;
+    padding: 0 8px 6px;
+  }
+  .nav a {
+    display:block; padding: 7px 10px; margin: 1px 0;
+    font-size: 13px; color: var(--gray-8); text-decoration: none;
+    border-radius: 6px; font-weight: 500;
+  }
+  .nav a:hover { background: var(--gray-1); color: var(--gray-9); }
+  .nav a.active { background: var(--purple-1); color: var(--purple-6); font-weight: 700; }
+
+  main { padding: 40px 56px 120px; max-width: 1200px; }
+
+  /* Hero */
+  .hero { padding: 24px 0 40px; border-bottom: 1px solid var(--border-primary); margin-bottom: 48px; }
+  .hero .kicker { font-size: 12px; font-weight: 700; color: var(--purple-6); letter-spacing: 0.6px; text-transform: uppercase; }
+  .hero h1 { font-size: 42px; line-height: 140%; letter-spacing: -1px; font-weight: 700; margin: 6px 0 10px; color: var(--gray-9); }
+  .hero p { font-size: 15px; color: var(--gray-7); max-width: 640px; line-height: 24px; margin: 0; }
+  .hero-meta {
+    display:flex; gap: 20px; margin-top: 22px;
+    font-size: 12px; color: var(--gray-6);
+  }
+  .hero-meta b { color: var(--gray-8); font-weight: 700; }
+
+  /* Sections */
+  section { margin-bottom: 64px; scroll-margin-top: 24px; }
+  .section-head {
+    display:flex; align-items: baseline; gap: 12px;
+    padding-bottom: 14px; margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-primary);
+  }
+  .section-head h2 { font-size: 26px; line-height: 36px; font-weight: 600; margin: 0; color: var(--gray-9); }
+  .section-head .tag { font-size: 11px; color: var(--gray-6); padding: 2px 8px; background: var(--gray-1); border-radius: 100px; font-weight: 600; }
+  .section-head p { margin: 0 0 0 auto; font-size: 13px; color: var(--gray-7); max-width: 420px; text-align: right; line-height: 18px; }
+
+  .subhead {
+    font-size: 13px; font-weight: 700; color: var(--gray-8);
+    margin: 20px 0 12px; display:flex; align-items: center; gap: 10px;
+  }
+  .subhead:before { content:""; width: 3px; height: 14px; background: var(--purple-6); border-radius: 2px; }
+
+  /* Cards */
+  .card {
+    background: var(--white); border: 1px solid var(--border-primary);
+    border-radius: 8px; padding: 24px;
+  }
+  .card + .card { margin-top: 12px; }
+
+  /* ---------- Colors ---------- */
+  .palette-grid {
+    display: grid; grid-template-columns: repeat(11, 1fr); gap: 6px;
+    margin-bottom: 18px;
+  }
+  .swatch {
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .swatch-chip {
+    height: 56px; border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .swatch-label { font-size: 11px; font-weight: 600; color: var(--gray-8); line-height: 1.3; }
+  .swatch-hex { font-size: 10px; color: var(--gray-6); font-family: 'SF Mono', Menlo, monospace; }
+  .palette-title { display:flex; justify-content: space-between; align-items: baseline; margin: 14px 0 8px; }
+  .palette-title h4 { font-size: 14px; font-weight: 700; color: var(--gray-9); margin: 0; }
+  .palette-title span { font-size: 12px; color: var(--gray-6); }
+
+  .semantic-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  }
+  .semantic {
+    border: 1px solid var(--border-primary); border-radius: 8px; overflow: hidden;
+    background: var(--white);
+  }
+  .semantic-preview { height: 72px; border-bottom: 1px solid var(--border-primary); }
+  .semantic-body { padding: 10px 12px; }
+  .semantic-body .name { font-size: 12px; font-weight: 700; color: var(--gray-9); }
+  .semantic-body .token { font-size: 11px; color: var(--gray-6); font-family: 'SF Mono', Menlo, monospace; margin-top: 2px; }
+
+  /* ---------- Typography ---------- */
+  .type-table {
+    width: 100%; border-collapse: collapse; background: var(--white);
+    border: 1px solid var(--border-primary); border-radius: 8px; overflow: hidden;
+  }
+  .type-table th, .type-table td {
+    text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--border-primary);
+    vertical-align: middle;
+  }
+  .type-table th {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px;
+    font-weight: 700; color: var(--gray-6); background: var(--gray-1);
+  }
+  .type-table td:first-child { font-weight: 700; font-size: 13px; color: var(--gray-9); width: 140px; }
+  .type-table td:nth-child(2) { color: var(--gray-9); }
+  .type-table td.meta { font-size: 11px; color: var(--gray-6); font-family: 'SF Mono', Menlo, monospace; width: 140px; }
+  .type-table tr:last-child td { border-bottom: none; }
+
+  /* Heading sizes */
+  .h-56 { font-size: 56px; line-height: 78px; letter-spacing: -1px; font-weight: 700; }
+  .h-42 { font-size: 42px; line-height: 140%; letter-spacing: -1px; font-weight: 700; }
+  .h-32 { font-size: 32px; line-height: 45px; font-weight: 700; }
+  .h-28 { font-size: 28px; line-height: 42px; font-weight: 700; }
+  .h-26 { font-size: 26px; line-height: 36px; font-weight: 700; }
+  .h-24 { font-size: 24px; line-height: 34px; font-weight: 700; }
+  .h-22 { font-size: 22px; line-height: 31px; font-weight: 700; }
+  .h-20 { font-size: 20px; line-height: 30px; font-weight: 700; }
+  .h-18 { font-size: 18px; line-height: 28px; font-weight: 700; }
+  .h-16 { font-size: 16px; line-height: 22px; font-weight: 700; }
+  .b-18 { font-size: 18px; line-height: 28px; }
+  .b-16 { font-size: 16px; line-height: 22px; }
+  .b-15 { font-size: 15px; line-height: 24px; }
+  .b-14 { font-size: 14px; line-height: 22px; }
+  .b-13 { font-size: 13px; line-height: 18px; }
+  .b-12 { font-size: 12px; line-height: 150%; }
+  .b-11 { font-size: 11px; line-height: 18px; }
+  .b-10 { font-size: 10px; line-height: 14px; }
+
+  /* ---------- Shadows ---------- */
+  .shadow-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .shadow-card {
+    aspect-ratio: 1; background: var(--white); border-radius: 8px;
+    display:flex; flex-direction: column; align-items:center; justify-content:center;
+    gap: 4px;
+  }
+  .shadow-card .n { font-size: 13px; font-weight: 700; color: var(--gray-9); }
+  .shadow-card .v { font-size: 10px; color: var(--gray-6); font-family: 'SF Mono', Menlo, monospace; text-align: center; padding: 0 10px; }
+  .s1{box-shadow:var(--shadow-1)} .s2{box-shadow:var(--shadow-2)} .s3{box-shadow:var(--shadow-3)} .s4{box-shadow:var(--shadow-4)}
+  .s5{box-shadow:var(--shadow-5)} .s6{box-shadow:var(--shadow-6)} .s7{box-shadow:var(--shadow-7)} .s8{box-shadow:var(--shadow-8)}
+
+  /* Radii */
+  .radius-row { display:flex; gap: 20px; align-items: flex-end; }
+  .radius-item { display:flex; flex-direction: column; gap:8px; align-items: flex-start; }
+  .radius-box { width: 72px; height: 72px; background: var(--purple-1); border: 1px solid var(--purple-3); }
+  .radius-box.r4 { border-radius: 4px; }
+  .radius-box.r6 { border-radius: 6px; }
+  .radius-box.r8 { border-radius: 8px; }
+  .radius-box.r16 { border-radius: 16px; }
+  .radius-box.rfull { border-radius: 999px; }
+  .radius-item .lbl { font-size: 12px; font-weight: 700; color: var(--gray-9); }
+  .radius-item .sub { font-size: 10px; color: var(--gray-6); font-family: 'SF Mono', Menlo, monospace; }
+
+  /* ---------- Buttons (N_Button) ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    border: none; cursor: pointer; white-space: nowrap; outline: none; box-shadow: none;
+    transition: 0.2s; font-family: inherit;
+  }
+  .btn:disabled { cursor: not-allowed; }
+  .btn-48 { height:48px; padding:0 22px; font-size:16px; font-weight:700; line-height:24px; border-radius:8px; gap:4px; }
+  .btn-40 { height:40px; padding:0 18px; font-size:14px; font-weight:700; line-height:22px; border-radius:8px; gap:4px; }
+  .btn-36 { height:36px; padding:0 14px; font-size:14px; font-weight:700; line-height:22px; border-radius:6px; gap:4px; }
+  .btn-28 { height:28px; padding:0 10px; font-size:12px; font-weight:700; line-height:18px; border-radius:4px; gap:2px; }
+  .btn-24 { height:24px; padding:0 5px; font-size:12px; font-weight:700; line-height:18px; border-radius:4px; gap:2px; }
+
+  /* Filled */
+  .btn.filled.black { background: var(--gray-9); color: var(--white); }
+  .btn.filled.black:hover { background: var(--gray-10); }
+  .btn.filled.black:disabled { background: #bfc4cb; }
+  .btn.filled.purple { background: var(--purple-6); color: var(--white); }
+  .btn.filled.purple:hover { background: var(--purple-7); }
+  .btn.filled.purple:disabled { background: #c9bdff; }
+  .btn.filled.warning { background: var(--red-6); color: var(--white); }
+  .btn.filled.warning:hover { background: var(--red-7); }
+  .btn.filled.warning:disabled { background: #f9b4af; }
+  /* Border */
+  .btn.border.black { border:1px solid var(--gray-3); background: var(--white); color: var(--gray-8); }
+  .btn.border.black:hover:not(:disabled) { background: #eff0f3; }
+  .btn.border.black:disabled { color: var(--gray-5); }
+  .btn.border.purple { border:1px solid var(--purple-3); background: var(--white); color: var(--purple-6); }
+  .btn.border.purple:hover { background: var(--purple-1); }
+  .btn.border.purple:disabled { color: var(--purple-4); }
+  .btn.border.warning { border:1px solid var(--red-3); background: var(--white); color: var(--red-6); }
+  .btn.border.warning:hover { background: var(--red-1); }
+  .btn.border.warning:disabled { color: var(--red-4); }
+  /* Borderless */
+  .btn.borderless.black { background: transparent; color: var(--gray-8); }
+  .btn.borderless.black:hover { background: #eff0f3; }
+  .btn.borderless.black:disabled { color: var(--gray-5); background: transparent; }
+  .btn.borderless.purple { background: transparent; color: var(--purple-6); }
+  .btn.borderless.purple:hover { background: var(--purple-1); }
+  .btn.borderless.purple:disabled { color: var(--purple-4); background: transparent; }
+  .btn.borderless.warning { background: transparent; color: var(--red-6); }
+  .btn.borderless.warning:hover { background: var(--red-1); }
+  /* Light filled */
+  .btn.light.black { background: var(--gray-1); color: var(--gray-8); }
+  .btn.light.black:hover { background: var(--gray-3); }
+  .btn.light.purple { background: var(--purple-1); color: var(--purple-6); }
+  .btn.light.purple:hover { background: #dbdeff; }
+  .btn.light.warning { background: var(--red-1); color: var(--red-6); }
+  .btn.light.warning:hover { background: var(--red-2); }
+
+  /* Button matrix */
+  .btn-matrix {
+    display: grid; grid-template-columns: 100px repeat(3, 1fr); gap: 16px 24px;
+    align-items: center;
+  }
+  .btn-matrix .col-h {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--gray-6);
+    padding-bottom: 4px;
+  }
+  .btn-matrix .row-h {
+    font-size: 12px; font-weight: 700; color: var(--gray-8);
+  }
+  .btn-row-wrap { display:flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+  /* ---------- Icon Button (N_IconButton) ---------- */
+  .icbtn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0; border: none; outline: none; box-shadow: none;
+    background: transparent; cursor: pointer; transition: 0.2s;
+    flex-shrink: 0;
+  }
+  .icbtn:disabled { cursor: not-allowed; }
+  .icbtn svg { display: block; transition: 0.2s; }
+
+  /* sizes */
+  .icbtn-20 { width:20px; height:20px; border-radius:4px; }
+  .icbtn-20 svg { width:12px; height:12px; }
+  .icbtn-24 { width:24px; height:24px; border-radius:4px; }
+  .icbtn-24 svg { width:12px; height:12px; }
+  .icbtn-28 { width:28px; height:28px; border-radius:4px; }
+  .icbtn-28 svg { width:14px; height:14px; }
+  .icbtn-32 { width:32px; height:32px; border-radius:4px; }
+  .icbtn-32 svg { width:18px; height:18px; }
+  .icbtn-36 { width:36px; height:36px; border-radius:6px; }
+  .icbtn-36 svg { width:20px; height:20px; }
+  .icbtn-40 { width:40px; height:40px; border-radius:8px; }
+  .icbtn-40 svg { width:24px; height:24px; }
+
+  /* light mode shapes */
+  .icbtn.light.borderless { background: transparent; }
+  .icbtn.light.borderless svg path { fill: var(--gray-8); }
+  .icbtn.light.borderless:hover:not(:disabled) { background: var(--hover-01-opacity); }
+  .icbtn.light.borderless:disabled svg path { fill: var(--gray-4); }
+
+  .icbtn.light.border { background: var(--white); border: 1px solid var(--gray-3); }
+  .icbtn.light.border svg path { fill: var(--gray-8); }
+  .icbtn.light.border:hover:not(:disabled) { background: var(--hover-01-opacity); }
+  .icbtn.light.border:disabled svg path { fill: var(--gray-4); }
+
+  .icbtn.light.filled { background: var(--gray-9); }
+  .icbtn.light.filled svg path { fill: var(--white); }
+  .icbtn.light.filled:hover:not(:disabled) { background: var(--gray-10); }
+  .icbtn.light.filled:disabled { background: var(--gray-4); }
+  .icbtn.light.filled:disabled svg path { fill: var(--white); }
+
+  /* dark mode shapes */
+  .icbtn.dark.borderless { background: transparent; }
+  .icbtn.dark.borderless svg path { fill: var(--white); }
+  .icbtn.dark.borderless:hover:not(:disabled) { background: rgba(255,255,255,0.18); }
+  .icbtn.dark.borderless:disabled svg path { fill: var(--gray-5); }
+
+  .icbtn.dark.border { background: transparent; border: 1px solid var(--gray-6); }
+  .icbtn.dark.border svg path { fill: var(--white); }
+  .icbtn.dark.border:hover:not(:disabled) { background: rgba(255,255,255,0.18); }
+  .icbtn.dark.border:disabled svg path { fill: var(--gray-5); }
+
+  .icbtn.dark.filled { background: var(--gray-9); }
+  .icbtn.dark.filled svg path { fill: var(--white); }
+  .icbtn.dark.filled:hover:not(:disabled) { background: var(--gray-10); }
+  .icbtn.dark.filled:disabled { background: var(--gray-4); }
+
+  .icbtn-grid {
+    display: grid; grid-template-columns: 110px repeat(6, 1fr); gap: 20px 18px;
+    align-items: center;
+  }
+  .icbtn-grid .col-h {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px;
+    color: var(--gray-6); text-align: center;
+  }
+  .icbtn-grid .row-h {
+    font-size: 12px; font-weight: 700; color: var(--gray-8);
+  }
+  .icbtn-cell {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 48px;
+  }
+  .icbtn-cell.dark {
+    background: var(--gray-10); border-radius: 8px;
+  }
+  .icbtn-spec {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px;
+    font-size: 11px; color: var(--gray-7); font-family: 'SF Mono', Menlo, monospace;
+    text-align: center; margin-top: 4px;
+  }
+  .icbtn-spec div b { display: block; font-size: 13px; color: var(--gray-9); margin-bottom: 2px; font-family: 'Pretendard', sans-serif; }
+
+  /* ---------- Inputs ---------- */
+  .input {
+    width: 100%; display: flex; align-items: center; gap: 4px;
+    border: 1px solid var(--gray-3); background: var(--white);
+    font-family: inherit; color: var(--gray-9);
+    transition: 0.15s;
+  }
+  .input:hover:not(.disabled):not(.focused):not(.error) { border-color: var(--gray-5); }
+  .input.focused { border: 2px solid var(--gray-7); }
+  .input.error { border: 1px solid var(--red-6); }
+  .input.disabled { background: var(--gray-1); color: var(--gray-5); }
+  .input input { border: none; outline: none; background: transparent; width: 100%; height: 100%; font-family: inherit; color: inherit; }
+  .input input::placeholder { color: var(--gray-5); }
+  .input-48 { height: 48px; border-radius: 8px; }
+  .input-48 input { padding-left: 16px; font-size: 15px; }
+  .input-40 { height: 40px; border-radius: 8px; }
+  .input-40 input { padding-left: 12px; font-size: 14px; }
+  .input-36 { height: 36px; border-radius: 6px; }
+  .input-36 input { padding-left: 12px; font-size: 14px; }
+  .input-28 { height: 28px; border-radius: 4px; }
+  .input-28 input { padding-left: 8px; font-size: 14px; }
+  .input .suffix { padding-right: 12px; display:flex; align-items:center; color: var(--gray-6); flex-shrink: 0; }
+
+  .error-msg { font-size: 12px; color: var(--red-6); padding: 4px 0 0 4px; }
+
+  .textarea {
+    width: 100%; min-height: 80px; padding: 12px 16px; border-radius: 8px;
+    border: 1px solid var(--pg-3); font-family: inherit; font-size: 14px;
+    resize: none; outline: none; color: var(--gray-9);
+  }
+  .textarea:hover { border-color: var(--gray-5); }
+  .textarea:focus { outline: 2px solid var(--gray-7); outline-offset: -2px; }
+  .textarea::placeholder { color: var(--gray-5); }
+
+  .selector {
+    width: 100%; display:flex; justify-content: space-between; align-items:center;
+    height: 40px; padding: 0 12px; border-radius: 8px; background: var(--white);
+    border: 1px solid var(--gray-3); cursor: pointer; font-size: 14px; color: var(--gray-8);
+  }
+  .selector:hover { border-color: var(--gray-5); }
+  .selector .arrow { color: var(--gray-6); font-size: 10px; }
+  .selector.ph { color: var(--gray-5); }
+
+  .input-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 32px; }
+  .input-grid .field-label { font-size: 12px; font-weight: 700; color: var(--gray-8); margin-bottom: 6px; display:block; }
+  .input-grid .field-meta { font-size: 11px; color: var(--gray-6); margin-top: 6px; }
+
+  /* ---------- Tags ---------- */
+  .tag {
+    display: inline-block; border-radius: 4px; white-space: nowrap;
+  }
+  .tag.xs { padding: 2px 5px; font-size: 10px; line-height: 14px; font-weight: 700; }
+  .tag.sm { padding: 2px 6px; font-size: 12px; line-height: 18px; }
+  .tag.lg { padding: 4px 8px; font-size: 14px; line-height: 22px; font-weight: 700; }
+  .tag.white { background: var(--white); color: var(--gray-9); border: 1px solid var(--pg-3); padding: 1px 5px; }
+  .tag.white.lg { padding: 3px 7px; }
+
+  .tag.lightPurple { background: var(--purple-1); color: var(--purple-6); }
+  .tag.purpleGray  { background: var(--pg-1);     color: var(--pg-9); }
+  .tag.blueGray    { background: #eaf1f5;         color: #5b717c; }
+  .tag.lightBlue   { background: var(--blue-1);   color: var(--blue-6); }
+  .tag.lightRed    { background: var(--red-2);    color: var(--red-6); }
+  .tag.lightOrange { background: var(--orange-2); color: var(--orange-7); }
+  .tag.lightGreen  { background: var(--green-1);  color: var(--green-7); }
+  .tag.lightYellow { background: var(--yellow-2); color: var(--yellow-8); }
+  .tag.gray        { background: var(--gray-2);   color: var(--gray-8); }
+  .tag.lightGray   { background: var(--gray-1);   color: var(--gray-8); }
+  .tag.mint        { background: var(--mint-2);   color: var(--mint-8); }
+  .tag.pink        { background: #FAEBF2;         color: #DC3C88; }
+  .tag.plum        { background: #F2E8F7;         color: #8A427D; }
+  .tag.olive       { background: #F5F3E0;         color: #74811B; }
+  .tag.brown       { background: #F3ECD8;         color: #81552E; }
+  .tag.indigo      { background: #EBF1FF;         color: #444CE7; }
+  .tag.vividOrange { background: #FCEEE3;         color: #E44E12; }
+  .tag.vividPurple { background: #F4EDFD;         color: #9438EF; }
+  .tag.solidBlue   { background: var(--blue-6);   color: var(--white); }
+  .tag.solidRed    { background: var(--red-6);    color: var(--white); }
+  .tag.solidPurple { background: var(--purple-6); color: var(--white); }
+  .tag.solidOrange { background: var(--orange-6); color: var(--white); }
+  .tag.solidGreen  { background: var(--green-6);  color: var(--white); }
+  .tag.dullGray    { background: var(--gray-5);   color: var(--white); }
+  .tag.darkGray    { background: var(--gray-7);   color: var(--white); }
+
+  .tag-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px 18px; align-items: center; }
+  .tag-cell { display:flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+  .tag-cell .nm { font-size: 11px; color: var(--gray-6); font-family: 'SF Mono', Menlo, monospace; }
+
+  /* ---------- Selection controls ---------- */
+  .sel-row { display:flex; gap: 28px; align-items: center; flex-wrap: wrap; }
+  .sel-item { display:flex; align-items:center; gap: 8px; font-size: 13px; color: var(--gray-8); }
+
+  .cbx {
+    width: 16px; height: 16px; border-radius: 4px; background: var(--white);
+    border: 1px solid var(--gray-6); display:flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0;
+  }
+  .cbx.checked { background: var(--purple-6); border-color: var(--purple-6); }
+  .cbx.checked:after {
+    content: ''; width: 8px; height: 5px; border-left: 2px solid var(--white); border-bottom: 2px solid var(--white);
+    transform: rotate(-45deg) translate(1px, -1px);
+  }
+  .cbx.inter { background: var(--purple-6); border-color: var(--purple-6); }
+  .cbx.inter:after { content:''; width: 8px; height: 2px; background: var(--white); border-radius: 1px; }
+  .cbx.disabled { background: var(--gray-2); border-color: var(--gray-4); cursor: not-allowed; }
+  .cbx.checked.disabled { background: var(--gray-5); border-color: var(--gray-5); }
+
+  .radio {
+    width: 16px; height: 16px; border-radius: 50%; background: var(--white);
+    border: 1px solid var(--gray-6); cursor: pointer; flex-shrink: 0;
+  }
+  .radio.checked { border: 5px solid var(--purple-6); }
+  .radio.disabled { background: var(--gray-2); border: 1px solid var(--gray-4); cursor: not-allowed; }
+  .radio.checked.disabled { border: 5px solid var(--gray-5); background: var(--white); }
+
+  .switch {
+    width: 40px; height: 24px; border-radius: 16px; padding: 4px;
+    background: var(--gray-5); display:flex; align-items:center; cursor: pointer; transition: 0.2s;
+  }
+  .switch.on { background: var(--purple-6); }
+  .switch.on:hover { background: var(--purple-7); }
+  .switch:not(.on):hover { background: var(--gray-6); }
+  .switch-knob { width: 16px; height: 16px; border-radius: 50%; background: var(--white); transition: transform 0.2s; }
+  .switch.on .switch-knob { transform: translateX(16px); }
+  .switch.sm { width: 32px; height: 18px; padding: 2px 3px; }
+  .switch.sm .switch-knob { width: 12px; height: 12px; }
+  .switch.sm.on .switch-knob { transform: translateX(14px); }
+  .switch.disabled { background: var(--gray-4); cursor: not-allowed; }
+  .switch.on.disabled { background: var(--purple-3); }
+
+  /* SwitchTab */
+  .switchtab {
+    display:inline-flex; height: 40px; border: 1px solid var(--pg-3);
+    border-radius: 32px; background: var(--gray-1); padding: 4px; gap: 4px;
+  }
+  .switchtab-item {
+    padding: 0 16px; display:flex; align-items:center; justify-content:center;
+    border-radius: 19px; cursor: pointer; font-size: 14px; font-weight: 700; color: var(--gray-7); white-space: nowrap;
+  }
+  .switchtab-item.active { background: var(--white); color: var(--gray-9); box-shadow: var(--shadow-2); }
+
+  /* Tabs */
+  .tabs {
+    display:flex; gap: 24px; border-bottom: 1px solid var(--border-primary);
+    padding: 0 4px;
+  }
+  .tab {
+    padding: 12px 0 16px; display:inline-flex; gap: 6px; cursor: pointer;
+    font-size: 14px; font-weight: 700; color: var(--gray-5);
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .tab .count { color: var(--gray-5); }
+  .tab:hover { color: var(--gray-9); }
+  .tab:hover .count { color: var(--purple-6); }
+  .tab.active { color: var(--gray-9); border-bottom-color: var(--gray-9); }
+  .tab.active .count { color: var(--purple-6); }
+
+  /* ---------- Info cards ---------- */
+  .info {
+    display:flex; gap: 8px; padding: 4px 8px; border-radius: 8px;
+    border: 1px solid; font-size: 12px; line-height: 150%;
+  }
+  .info .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+  .info.orange { background: var(--orange-1); border-color: var(--orange-3); color: var(--orange-7); }
+  .info.orange .dot { background: var(--orange-6); }
+  .info.red    { background: var(--red-1);    border-color: var(--red-3);    color: var(--red-7); }
+  .info.red .dot { background: var(--red-6); }
+  .info.purple { background: var(--purple-1); border-color: var(--purple-3); color: var(--purple-7); }
+  .info.purple .dot { background: var(--purple-6); }
+  .info.gray   { background: var(--gray-1);   border-color: var(--border-primary); color: var(--gray-7); }
+  .info.gray .dot { background: var(--gray-6); }
+
+  .noticard {
+    padding: 7px 12px; background: var(--gray-1); border-radius: 6px;
+    display:flex; align-items: center; gap: 8px; font-size: 13px; color: var(--gray-8);
+  }
+  .noticard.warning { background: var(--red-1); color: var(--red-7); padding: 9px 12px; }
+  .noticard.twoline {
+    padding: 12px 16px; flex-direction: column; align-items: flex-start; gap: 12px;
+  }
+  .noticard.twoline.purple { background: var(--purple-1); }
+  .noticard-top { display:flex; align-items: center; gap: 12px; }
+  .noticard-title { font-size: 14px; font-weight: 700; color: var(--gray-8); }
+
+  /* ---------- Avatars ---------- */
+  .avatar {
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 50%; outline: 1px solid var(--gray-3); overflow: hidden;
+    font-weight: 700; color: var(--white); letter-spacing: -0.2px;
+  }
+  .avatar.a-16 { width: 16px; height: 16px; font-size: 8px; }
+  .avatar.a-20 { width: 20px; height: 20px; font-size: 10px; }
+  .avatar.a-24 { width: 24px; height: 24px; font-size: 11px; }
+  .avatar.a-32 { width: 32px; height: 32px; font-size: 13px; }
+  .avatar.a-40 { width: 40px; height: 40px; font-size: 15px; }
+  .avatar.a-56 { width: 56px; height: 56px; font-size: 20px; }
+  .avatar-row { display:flex; align-items: flex-end; gap: 20px; }
+  .avatar-item { display:flex; flex-direction: column; gap: 6px; align-items: center; }
+  .avatar-item .lbl { font-size: 11px; color: var(--gray-6); font-family: 'SF Mono', Menlo, monospace; }
+
+  /* ---------- Modal preview ---------- */
+  .modal-preview {
+    background: var(--gray-2); border-radius: 12px; padding: 36px;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 360px; position: relative; overflow: hidden;
+  }
+  .modal-preview:before {
+    content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.4);
+  }
+  .modal {
+    position: relative; width: 460px; background: var(--white);
+    border-radius: 8px; box-shadow: var(--shadow-1); overflow: hidden;
+  }
+  .modal-body { padding: 28px; }
+  .modal-title { font-size: 22px; line-height: 31px; font-weight: 700; color: var(--gray-9); margin: 0 0 8px; }
+  .modal-desc { font-size: 14px; color: var(--gray-7); line-height: 22px; margin: 0; }
+  .modal-footer { padding: 12px 28px 24px; display:flex; justify-content: flex-end; gap: 8px; }
+
+  /* ---------- Usage guidelines ---------- */
+  .do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .do, .dont {
+    border: 1px solid var(--border-primary); border-radius: 8px; overflow: hidden; background: var(--white);
+  }
+  .do .bar, .dont .bar {
+    padding: 10px 16px; font-size: 12px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase;
+  }
+  .do .bar { background: var(--green-1); color: var(--green-7); }
+  .dont .bar { background: var(--red-1); color: var(--red-7); }
+  .do .body, .dont .body { padding: 20px; }
+
+  /* Utility */
+  .stack { display: flex; flex-direction: column; gap: 8px; }
+  .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .grow { flex: 1; min-width: 0; }
+  .mono { font-family: 'SF Mono', Menlo, monospace; font-size: 11px; color: var(--gray-6); }
+  .caption { font-size: 11px; color: var(--gray-6); margin-top: 6px; }
+
+  /* Icon placeholder (no icon font) */
+  .i { display: inline-block; width: 1em; height: 1em; border: 1.5px solid currentColor; border-radius: 3px; opacity: 0.8; }
+  .i-plus { position: relative; border: none; }
+  .i-plus:before, .i-plus:after { content:''; position:absolute; background: currentColor; border-radius: 1px; }
+  .i-plus:before { left: 0; right: 0; top: 45%; height: 12%; }
+  .i-plus:after { top: 0; bottom: 0; left: 45%; width: 12%; }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="brand"><img src="assets/ninehire-logo.svg" alt="Ninehire" style="height:18px;width:auto;display:block"/></div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Foundation</div>
+      <nav class="nav">
+        <a href="#colors" class="active">Colors</a>
+        <a href="#typography">Typography</a>
+        <a href="#shadow-radius">Shadow & Radius</a>
+      </nav>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Components</div>
+      <nav class="nav">
+        <a href="#buttons">Buttons</a>
+        <a href="#icon-buttons">Icon Buttons</a>
+        <a href="#inputs">Inputs</a>
+        <a href="#tags">Tags</a>
+        <a href="#selection">Selection</a>
+        <a href="#tabs-switches">Tabs & Switches</a>
+        <a href="#info">Info cards</a>
+        <a href="#avatars">Avatars</a>
+        <a href="#modal">Modal</a>
+      </nav>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Guide</div>
+      <nav class="nav">
+        <a href="#usage">Usage rules</a>
+      </nav>
+    </div>
+  </aside>
+
+  <main>
+    <div class="hero">
+      <div class="kicker">N_ Component Library</div>
+      <h1>Design System</h1>
+      <p>Source of truth for the codebase. Every token, every size variant, every hover and disabled state is extracted directly from the <code style="font-family:'SF Mono',Menlo,monospace;font-size:13px;background:var(--gray-1);padding:2px 6px;border-radius:4px">atoms/</code> and <code style="font-family:'SF Mono',Menlo,monospace;font-size:13px;background:var(--gray-1);padding:2px 6px;border-radius:4px">components/</code> folders.</p>
+      <div class="hero-meta">
+        <div><b>140+</b> color tokens</div>
+        <div><b>10</b> heading sizes</div>
+        <div><b>60</b> button combinations</div>
+        <div><b>25+</b> tag variants</div>
+        <div>Pretendard · Styled-components</div>
+      </div>
+    </div>
+
+    <!-- ============ COLORS ============ -->
+    <section id="colors">
+      <div class="section-head">
+        <h2>Colors</h2><span class="tag">components/color/Color.ts</span>
+        <p>10-step scales anchored to the primary purple. Prefer semantic tokens from <span class="mono">NeutralColorTokens.ts</span> in product code.</p>
+      </div>
+
+      <div class="subhead">Semantic tokens</div>
+      <div class="semantic-grid">
+        <div class="semantic"><div class="semantic-preview" style="background:var(--gray-9)"></div><div class="semantic-body"><div class="name">Text / Title</div><div class="token">TextTitle → GRAY_9</div></div></div>
+        <div class="semantic"><div class="semantic-preview" style="background:var(--gray-8)"></div><div class="semantic-body"><div class="name">Text / Primary</div><div class="token">TextPrimary → GRAY_8</div></div></div>
+        <div class="semantic"><div class="semantic-preview" style="background:var(--gray-7)"></div><div class="semantic-body"><div class="name">Text / Secondary</div><div class="token">TextSecondary → GRAY_7</div></div></div>
+        <div class="semantic"><div class="semantic-preview" style="background:var(--gray-6)"></div><div class="semantic-body"><div class="name">Text / Tertiary</div><div class="token">TextTertiary → GRAY_6</div></div></div>
+        <div class="semantic"><div class="semantic-preview" style="background:var(--gray-5)"></div><div class="semantic-body"><div class="name">Text / Placeholder</div><div class="token">TextPlaceholder → GRAY_5</div></div></div>
+        <div class="semantic"><div class="semantic-preview" style="background:var(--white);border-bottom:1px solid var(--border-primary)"></div><div class="semantic-body"><div class="name">BG / Primary</div><div class="token">BackgroundPrimary → WHITE</div></div></div>
+        <div class="semantic"><div class="semantic-preview" style="background:var(--gray-1)"></div><div class="semantic-body"><div class="name">BG / Secondary</div><div class="token">BackgroundSecondary → GRAY_1</div></div></div>
+        <div class="semantic"><div class="semantic-preview" style="background:var(--gray-3)"></div><div class="semantic-body"><div class="name">Border / Primary</div><div class="token">BorderPrimary → GRAY_3</div></div></div>
+      </div>
+
+      <div class="subhead">Primary — Purple</div>
+      <div class="palette-grid" id="palette-purple"></div>
+
+      <div class="subhead">Neutrals — Gray</div>
+      <div class="palette-grid" id="palette-gray"></div>
+
+      <div class="subhead">Red · Green · Orange · Yellow</div>
+      <div class="palette-grid" id="palette-red"></div>
+      <div class="palette-grid" id="palette-green"></div>
+      <div class="palette-grid" id="palette-orange"></div>
+      <div class="palette-grid" id="palette-yellow"></div>
+
+      <div class="subhead">Blue · Mint · Purple-gray · Blue-gray</div>
+      <div class="palette-grid" id="palette-blue"></div>
+      <div class="palette-grid" id="palette-mint"></div>
+      <div class="palette-grid" id="palette-pgray"></div>
+      <div class="palette-grid" id="palette-bgray"></div>
+    </section>
+
+    <!-- ============ TYPOGRAPHY ============ -->
+    <section id="typography">
+      <div class="section-head">
+        <h2>Typography</h2><span class="tag">Heading · Body · Caption</span>
+        <p>Pretendard Variable. Headings default to bold & GRAY_9; Body/Caption are span-level and accept any Color token via props.</p>
+      </div>
+
+      <div class="subhead">Heading (size)</div>
+      <table class="type-table">
+        <thead><tr><th>Size</th><th>Sample</th><th>Spec</th></tr></thead>
+        <tbody>
+          <tr><td>H56</td><td class="h-56">머신이 일을 한다</td><td class="meta">56 / 78 · -1px</td></tr>
+          <tr><td>H42</td><td class="h-42">채용 자동화로 시간을 되돌리세요</td><td class="meta">42 / 140% · -1px</td></tr>
+          <tr><td>H32</td><td class="h-32">지원자가 도착했습니다</td><td class="meta">32 / 45</td></tr>
+          <tr><td>H28</td><td class="h-28">섹션 타이틀 · Section header</td><td class="meta">28 / 42</td></tr>
+          <tr><td>H26</td><td class="h-26">모달 및 페이지 헤더</td><td class="meta">26 / 36</td></tr>
+          <tr><td>H24</td><td class="h-24">카드 타이틀</td><td class="meta">24 / 34</td></tr>
+          <tr><td>H22</td><td class="h-22">서브섹션 타이틀</td><td class="meta">22 / 31</td></tr>
+          <tr><td>H20</td><td class="h-20">리스트 그룹 타이틀</td><td class="meta">20 / 30</td></tr>
+          <tr><td>H18</td><td class="h-18">폼 그룹 타이틀</td><td class="meta">18 / 28</td></tr>
+          <tr><td>H16</td><td class="h-16">강조 라벨</td><td class="meta">16 / 22</td></tr>
+        </tbody>
+      </table>
+
+      <div class="subhead">Body</div>
+      <table class="type-table">
+        <thead><tr><th>Size</th><th>Sample</th><th>Spec</th></tr></thead>
+        <tbody>
+          <tr><td>Body 18</td><td class="b-18">본문에서 쓰이는 가장 큰 텍스트 크기입니다.</td><td class="meta">18 / 28</td></tr>
+          <tr><td>Body 16</td><td class="b-16">읽기 편한 기본 본문 크기입니다.</td><td class="meta">16 / 22</td></tr>
+          <tr><td>Body 15</td><td class="b-15">입력 필드와 버튼 48 사이즈용.</td><td class="meta">15 / 24</td></tr>
+          <tr><td>Body 14</td><td class="b-14">UI 기본 크기 — 폼, 버튼 40/36, 대부분의 텍스트.</td><td class="meta">14 / 22</td></tr>
+          <tr><td>Body 13</td><td class="b-13">노티 카드, 설명문 등 조금 작은 본문.</td><td class="meta">13 / 18</td></tr>
+          <tr><td>Body 12</td><td class="b-12">에러 메시지, 메타 정보, 태그</td><td class="meta">12 / 150%</td></tr>
+          <tr><td>Body 11</td><td class="b-11">아주 작은 메타 텍스트</td><td class="meta">11 / 18</td></tr>
+          <tr><td>Body 10</td><td class="b-10">미세한 캡션 — 쓸 때 이유가 필요</td><td class="meta">10 / 14</td></tr>
+        </tbody>
+      </table>
+
+      <div class="subhead">Text (Figma handoff aliases)</div>
+      <table class="type-table">
+        <thead><tr><th>Type</th><th>Sample</th><th>Spec</th></tr></thead>
+        <tbody>
+          <tr><td>42B</td><td style="font-size:42px;line-height:59px;font-weight:700">큰 타이틀</td><td class="meta">700 · 42/59</td></tr>
+          <tr><td>32SB</td><td style="font-size:32px;line-height:45px;font-weight:600">섹션 타이틀</td><td class="meta">600 · 32/45</td></tr>
+          <tr><td>26SB</td><td style="font-size:26px;line-height:36px;font-weight:600">페이지 헤더</td><td class="meta">600 · 26/36</td></tr>
+          <tr><td>22SB</td><td style="font-size:22px;line-height:31px;font-weight:600">카드 타이틀</td><td class="meta">600 · 22/31</td></tr>
+          <tr><td>BD_18B</td><td style="font-size:18px;line-height:32px;font-weight:700">강조 본문</td><td class="meta">700 · 18/32</td></tr>
+          <tr><td>BD_16R</td><td style="font-size:16px;line-height:26px;font-weight:400">일반 본문</td><td class="meta">400 · 16/26</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ============ SHADOW & RADIUS ============ -->
+    <section id="shadow-radius">
+      <div class="section-head">
+        <h2>Shadow & Radius</h2><span class="tag">components/shadow/Shadow.ts</span>
+        <p>8 elevation steps. _1 is for modals (N_Modal), _2 for floating tabs, _7 for subtle resting cards.</p>
+      </div>
+
+      <div class="subhead">Elevation</div>
+      <div class="card" style="padding:40px;background:var(--bg-secondary)">
+        <div class="shadow-grid">
+          <div class="shadow-card s1"><div class="n">Shadow._1</div><div class="v">0 10 10 / 0.1</div></div>
+          <div class="shadow-card s2"><div class="n">Shadow._2</div><div class="v">0 0 20 / 0.1</div></div>
+          <div class="shadow-card s3"><div class="n">Shadow._3</div><div class="v">0 10 30 / 0.1</div></div>
+          <div class="shadow-card s4"><div class="n">Shadow._4</div><div class="v">0 4 8 / 0.1</div></div>
+          <div class="shadow-card s5"><div class="n">Shadow._5</div><div class="v">0 10 30 / 0.03</div></div>
+          <div class="shadow-card s6"><div class="n">Shadow._6</div><div class="v">0 4 4 / 0.05</div></div>
+          <div class="shadow-card s7"><div class="n">Shadow._7</div><div class="v">0 2 4 / 0.05</div></div>
+          <div class="shadow-card s8"><div class="n">Shadow._8</div><div class="v">0 4 16 / 0.1</div></div>
+        </div>
+      </div>
+
+      <div class="subhead">Overlay / Hover layers</div>
+      <div class="card">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+          <div class="semantic"><div class="semantic-preview" style="background:var(--hover-01)"></div><div class="semantic-body"><div class="name">Hover 01</div><div class="token">#EAEBF0 · solid</div></div></div>
+          <div class="semantic"><div class="semantic-preview" style="background:var(--hover-02)"></div><div class="semantic-body"><div class="name">Hover 02</div><div class="token">#DBDEE4 · solid</div></div></div>
+          <div class="semantic"><div class="semantic-preview" style="background:linear-gradient(45deg,var(--gray-3) 25%,transparent 25%,transparent 75%,var(--gray-3) 75%),linear-gradient(45deg,var(--gray-3) 25%,transparent 25%,transparent 75%,var(--gray-3) 75%);background-size:12px 12px;background-position:0 0,6px 6px;position:relative"><div style="position:absolute;inset:0;background:var(--hover-01-opacity)"></div></div><div class="semantic-body"><div class="name">Hover 01 · Opacity</div><div class="token">GRAY_5 · 20%</div></div></div>
+          <div class="semantic"><div class="semantic-preview" style="background:linear-gradient(45deg,var(--gray-3) 25%,transparent 25%,transparent 75%,var(--gray-3) 75%),linear-gradient(45deg,var(--gray-3) 25%,transparent 25%,transparent 75%,var(--gray-3) 75%);background-size:12px 12px;background-position:0 0,6px 6px;position:relative"><div style="position:absolute;inset:0;background:var(--hover-02-opacity)"></div></div><div class="semantic-body"><div class="name">Hover 02 · Opacity</div><div class="token">GRAY_5 · 40%</div></div></div>
+          <div class="semantic"><div class="semantic-preview" style="background:var(--gray-9);position:relative"><div style="position:absolute;inset:0;background:var(--dark-layer-01)"></div></div><div class="semantic-body"><div class="name">Dark Layer 01</div><div class="token">PURPLE_3 · 20% on dark</div></div></div>
+          <div class="semantic"><div class="semantic-preview" style="background:var(--gray-9);position:relative"><div style="position:absolute;inset:0;background:var(--dark-layer-02)"></div></div><div class="semantic-body"><div class="name">Dark Layer 02</div><div class="token">PURPLE_3 · 40% on dark</div></div></div>
+        </div>
+        <div class="caption">Solid hovers for opaque surfaces (cards, rows). Opacity hovers for layering on images/colored backgrounds. Dark layers are reserved for elevation on dark/gradient surfaces.</div>
+      </div>
+
+      <div class="subhead">Border radius</div>
+      <div class="card">
+        <div class="radius-row">
+          <div class="radius-item"><div class="radius-box r4"></div><div class="lbl">4px</div><div class="sub">Tag · Button 24/28</div></div>
+          <div class="radius-item"><div class="radius-box r6"></div><div class="lbl">6px</div><div class="sub">Input 36 · Button 36</div></div>
+          <div class="radius-item"><div class="radius-box r8"></div><div class="lbl">8px</div><div class="sub">Input 40/48 · Button 40/48 · Modal · Card</div></div>
+          <div class="radius-item"><div class="radius-box r16"></div><div class="lbl">16px</div><div class="sub">Switch</div></div>
+          <div class="radius-item"><div class="radius-box rfull"></div><div class="lbl">999px</div><div class="sub">Avatar · SwitchTab outer</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BUTTONS ============ -->
+    <section id="buttons">
+      <div class="section-head">
+        <h2>Buttons</h2><span class="tag">N_Button</span>
+        <p>5 sizes × 4 shapes × 3 colors = 60 permutations. Use <b>Filled · Purple</b> for primary CTAs, <b>Border · Black</b> for secondary, <b>Borderless</b> for tertiary.</p>
+      </div>
+
+      <div class="subhead">Sizes</div>
+      <div class="card">
+        <div class="btn-row-wrap">
+          <button class="btn btn-48 filled purple">Height 48</button>
+          <button class="btn btn-40 filled purple">Height 40</button>
+          <button class="btn btn-36 filled purple">Height 36</button>
+          <button class="btn btn-28 filled purple">Height 28</button>
+          <button class="btn btn-24 filled purple">H24</button>
+        </div>
+        <div class="caption">Heights: 48 · 40 · 36 · 28 · 24. Defaults to 40 in most flows.</div>
+      </div>
+
+      <div class="subhead">Shape × Color matrix (size 40)</div>
+      <div class="card">
+        <div class="btn-matrix">
+          <div></div>
+          <div class="col-h">Black</div><div class="col-h">Purple</div><div class="col-h">Warning</div>
+
+          <div class="row-h">Filled</div>
+          <div class="btn-row-wrap"><button class="btn btn-40 filled black">Default</button><button class="btn btn-40 filled black" disabled>Disabled</button></div>
+          <div class="btn-row-wrap"><button class="btn btn-40 filled purple">Primary CTA</button><button class="btn btn-40 filled purple" disabled>Disabled</button></div>
+          <div class="btn-row-wrap"><button class="btn btn-40 filled warning">Delete</button><button class="btn btn-40 filled warning" disabled>Disabled</button></div>
+
+          <div class="row-h">Border</div>
+          <div class="btn-row-wrap"><button class="btn btn-40 border black">Secondary</button><button class="btn btn-40 border black" disabled>Disabled</button></div>
+          <div class="btn-row-wrap"><button class="btn btn-40 border purple">Purple</button><button class="btn btn-40 border purple" disabled>Disabled</button></div>
+          <div class="btn-row-wrap"><button class="btn btn-40 border warning">Cancel</button><button class="btn btn-40 border warning" disabled>Disabled</button></div>
+
+          <div class="row-h">Borderless</div>
+          <div class="btn-row-wrap"><button class="btn btn-40 borderless black">Tertiary</button><button class="btn btn-40 borderless black" disabled>Disabled</button></div>
+          <div class="btn-row-wrap"><button class="btn btn-40 borderless purple">Link</button><button class="btn btn-40 borderless purple" disabled>Disabled</button></div>
+          <div class="btn-row-wrap"><button class="btn btn-40 borderless warning">Danger</button><button class="btn btn-40 borderless warning" disabled>Disabled</button></div>
+
+          <div class="row-h">Light filled</div>
+          <div class="btn-row-wrap"><button class="btn btn-40 light black">Soft</button><button class="btn btn-40 light black" disabled>Disabled</button></div>
+          <div class="btn-row-wrap"><button class="btn btn-40 light purple">Highlight</button><button class="btn btn-40 light purple" disabled>Disabled</button></div>
+          <div class="btn-row-wrap"><button class="btn btn-40 light warning">Warning</button><button class="btn btn-40 light warning" disabled>Disabled</button></div>
+        </div>
+      </div>
+
+      <div class="subhead">With icons & block</div>
+      <div class="card">
+        <div class="btn-row-wrap" style="margin-bottom:14px">
+          <button class="btn btn-40 filled purple"><span class="i-plus" style="width:14px;height:14px;position:relative"></span> 추가하기</button>
+          <button class="btn btn-40 border black">필터 <span class="i" style="width:10px;height:10px"></span></button>
+          <button class="btn btn-36 borderless purple">자세히 보기 →</button>
+          <button class="btn btn-28 light purple">New</button>
+        </div>
+        <button class="btn btn-48 filled purple" style="width:100%">Block (width:100%)</button>
+      </div>
+
+      <div class="subhead" id="icon-buttons">Icon Button (N_IconButton) · Light mode</div>
+      <div class="card">
+        <div class="icbtn-grid">
+          <div></div>
+          <div class="col-h">20</div><div class="col-h">24</div><div class="col-h">28</div>
+          <div class="col-h">32</div><div class="col-h">36</div><div class="col-h">40</div>
+
+          <div class="row-h">Borderless</div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-20 light borderless" aria-label="plus">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-24 light borderless" aria-label="plus">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-28 light borderless" aria-label="plus">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-32 light borderless" aria-label="plus">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-36 light borderless" aria-label="plus">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-40 light borderless" aria-label="plus">__ICON__</button></div>
+
+          <div class="row-h">Border</div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-20 light border" aria-label="plus">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-24 light border" aria-label="plus">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-28 light border" aria-label="plus">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-32 light border" aria-label="plus">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-36 light border" aria-label="plus">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-40 light border" aria-label="plus">__ICON__</button></div>
+
+          <div class="row-h">Filled</div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-20 light filled" aria-label="plus">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-24 light filled" aria-label="plus">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-28 light filled" aria-label="plus">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-32 light filled" aria-label="plus">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-36 light filled" aria-label="plus">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-40 light filled" aria-label="plus">__ICON__</button></div>
+
+          <div class="row-h">Disabled</div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-20 light borderless" disabled>__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-24 light border" disabled>__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-28 light filled" disabled>__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-32 light borderless" disabled>__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-36 light border" disabled>__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-40 light filled" disabled>__ICON__</button></div>
+        </div>
+        <div class="icbtn-spec">
+          <div><b>20 · r4</b>icon 12</div>
+          <div><b>24 · r4</b>icon 12</div>
+          <div><b>28 · r4</b>icon 14</div>
+          <div><b>32 · r4</b>icon 18</div>
+          <div><b>36 · r6</b>icon 20</div>
+          <div><b>40 · r8</b>icon 24</div>
+        </div>
+        <div class="caption" style="margin-top:14px">Square hit target. Radius: 20/24/28/32 → 4 · 36 → 6 · 40 → 8. Default type <b>borderless</b>. Hover uses <span class="mono">HoverOpacity_1</span> (GRAY_5 · 20%).</div>
+      </div>
+
+      <div class="subhead">Icon Button · Dark mode</div>
+      <div class="card" style="background: var(--gray-10); border-color: transparent;">
+          <div class="icbtn-grid">
+          <div></div>
+          <div class="col-h" style="color:var(--gray-5)">20</div>
+          <div class="col-h" style="color:var(--gray-5)">24</div>
+          <div class="col-h" style="color:var(--gray-5)">28</div>
+          <div class="col-h" style="color:var(--gray-5)">32</div>
+          <div class="col-h" style="color:var(--gray-5)">36</div>
+          <div class="col-h" style="color:var(--gray-5)">40</div>
+
+          <div class="row-h" style="color:var(--gray-5)">Borderless</div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-20 dark borderless">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-24 dark borderless">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-28 dark borderless">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-32 dark borderless">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-36 dark borderless">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-40 dark borderless">__ICON__</button></div>
+
+          <div class="row-h" style="color:var(--gray-5)">Border</div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-20 dark border">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-24 dark border">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-28 dark border">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-32 dark border">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-36 dark border">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-40 dark border">__ICON__</button></div>
+
+          <div class="row-h" style="color:var(--gray-5)">Filled</div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-20 dark filled">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-24 dark filled">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-28 dark filled">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-32 dark filled">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-36 dark filled">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-40 dark filled">__ICON__</button></div>
+        </div>
+      </div>
+
+      <div class="subhead">Common icon presets</div>
+      <div class="card">
+        <div class="btn-row-wrap">
+          <button class="icbtn icbtn-32 light border" aria-label="plus">__ICON_PLUS__</button>
+          <button class="icbtn icbtn-32 light border" aria-label="close">__ICON_CLOSE__</button>
+          <button class="icbtn icbtn-32 light border" aria-label="more">__ICON_MORE__</button>
+          <button class="icbtn icbtn-32 light border" aria-label="search">__ICON_SEARCH__</button>
+          <button class="icbtn icbtn-32 light border" aria-label="filter">__ICON_FILTER__</button>
+          <button class="icbtn icbtn-32 light border" aria-label="edit">__ICON_EDIT__</button>
+          <button class="icbtn icbtn-32 light border" aria-label="trash">__ICON_TRASH__</button>
+          <button class="icbtn icbtn-32 light border" aria-label="download">__ICON_DOWNLOAD__</button>
+          <button class="icbtn icbtn-32 light border" aria-label="chevron">__ICON_CHEVRON__</button>
+        </div>
+        <div class="caption" style="margin-top:10px">SVG path fill is driven by <span class="mono">path { fill: currentColor }</span> in the component — color flows from the shape/mode styles automatically.</div>
+      </div>
+    </section>
+
+    <!-- ============ INPUTS ============ -->
+    <section id="inputs">
+      <div class="section-head">
+        <h2>Inputs</h2><span class="tag">N_Input · N_Textarea · N_Selector · N_SearchBar1</span>
+        <p>Default border <span class="mono">GRAY_3</span>, hover <span class="mono">GRAY_5</span>, focus 2px <span class="mono">GRAY_7</span>, error 1px <span class="mono">RED_6</span>.</p>
+      </div>
+
+      <div class="card">
+        <div class="input-grid">
+          <div>
+            <span class="field-label">Default</span>
+            <div class="input input-40"><input type="text" placeholder="이름을 입력하세요" /></div>
+            <div class="field-meta">height: 40 · font-size: 14</div>
+          </div>
+          <div>
+            <span class="field-label">Focused</span>
+            <div class="input input-40 focused"><input type="text" value="김지원" /></div>
+            <div class="field-meta">2px solid GRAY_7</div>
+          </div>
+          <div>
+            <span class="field-label">Filled + suffix</span>
+            <div class="input input-40"><input type="text" value="applicant@example.com" /><span class="suffix">@company.com</span></div>
+            <div class="field-meta">with suffix node</div>
+          </div>
+          <div>
+            <span class="field-label">Error</span>
+            <div class="input input-40 error"><input type="text" value="잘못된 값" /></div>
+            <div class="error-msg">올바른 이메일을 입력해주세요.</div>
+          </div>
+          <div>
+            <span class="field-label">Disabled</span>
+            <div class="input input-40 disabled"><input type="text" value="변경 불가" disabled /></div>
+            <div class="field-meta">bg GRAY_1 · text GRAY_5</div>
+          </div>
+          <div>
+            <span class="field-label">Search — height 40</span>
+            <div class="input input-40"><input type="text" placeholder="검색어를 입력하세요" /><span class="suffix">⌕</span></div>
+          </div>
+        </div>
+
+        <div style="height:24px"></div>
+        <div class="subhead" style="margin:0 0 12px">Size variants</div>
+        <div class="stack" style="gap:12px">
+          <div class="input input-48"><input type="text" placeholder="height 48 · 15px" /></div>
+          <div class="input input-40"><input type="text" placeholder="height 40 · 14px" /></div>
+          <div class="input input-36"><input type="text" placeholder="height 36 · 14px" /></div>
+          <div class="input input-28"><input type="text" placeholder="height 28 · 14px" /></div>
+        </div>
+      </div>
+
+      <div class="subhead">Selector</div>
+      <div class="card">
+        <div class="input-grid">
+          <div>
+            <span class="field-label">Placeholder</span>
+            <div class="selector ph"><span>부서를 선택하세요</span><span class="arrow">▾</span></div>
+          </div>
+          <div>
+            <span class="field-label">Selected</span>
+            <div class="selector"><span>프로덕트 디자인팀</span><span class="arrow">▾</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subhead">Textarea</div>
+      <div class="card">
+        <textarea class="textarea" placeholder="내용을 입력하세요"></textarea>
+      </div>
+    </section>
+
+    <!-- ============ TAGS ============ -->
+    <section id="tags">
+      <div class="section-head">
+        <h2>Tags</h2><span class="tag">N_Tag</span>
+        <p>Use the <b>light*</b> series for neutral badges, solid colors for status emphasis, <b>white</b> only when floating over gray backgrounds.</p>
+      </div>
+
+      <div class="subhead">Sizes (color = lightPurple)</div>
+      <div class="card">
+        <div class="row" style="gap:16px">
+          <div class="tag lightPurple xs">TAG XS</div>
+          <div class="tag lightPurple sm">TAG SM</div>
+          <div class="tag lightPurple lg">TAG LG</div>
+        </div>
+        <div class="caption">XS 10/14 bold · SM 12/18 regular · LG 14/22 bold</div>
+      </div>
+
+      <div class="subhead">Light palette (for status, category)</div>
+      <div class="card">
+        <div class="tag-grid">
+          <div class="tag-cell"><div class="tag lightPurple sm">lightPurple</div><div class="nm">lightPurple</div></div>
+          <div class="tag-cell"><div class="tag purpleGray sm">purpleGray</div><div class="nm">purpleGray</div></div>
+          <div class="tag-cell"><div class="tag blueGray sm">blueGray</div><div class="nm">blueGray</div></div>
+          <div class="tag-cell"><div class="tag lightBlue sm">lightBlue</div><div class="nm">lightBlue</div></div>
+          <div class="tag-cell"><div class="tag lightRed sm">lightRed</div><div class="nm">lightRed</div></div>
+          <div class="tag-cell"><div class="tag lightOrange sm">lightOrange</div><div class="nm">lightOrange</div></div>
+          <div class="tag-cell"><div class="tag lightGreen sm">lightGreen</div><div class="nm">lightGreen</div></div>
+          <div class="tag-cell"><div class="tag lightYellow sm">lightYellow</div><div class="nm">lightYellow</div></div>
+          <div class="tag-cell"><div class="tag gray sm">gray</div><div class="nm">gray</div></div>
+          <div class="tag-cell"><div class="tag lightGray sm">lightGray</div><div class="nm">lightGray</div></div>
+          <div class="tag-cell"><div class="tag mint sm">mint</div><div class="nm">mint</div></div>
+          <div class="tag-cell"><div class="tag pink sm">pink</div><div class="nm">pink</div></div>
+          <div class="tag-cell"><div class="tag plum sm">plum</div><div class="nm">plum</div></div>
+          <div class="tag-cell"><div class="tag olive sm">olive</div><div class="nm">olive</div></div>
+          <div class="tag-cell"><div class="tag brown sm">brown</div><div class="nm">brown</div></div>
+          <div class="tag-cell"><div class="tag indigo sm">indigo</div><div class="nm">indigo</div></div>
+          <div class="tag-cell"><div class="tag vividOrange sm">vivid-orange</div><div class="nm">vividOrange</div></div>
+          <div class="tag-cell"><div class="tag vividPurple sm">vivid-purple</div><div class="nm">vividPurple</div></div>
+        </div>
+      </div>
+
+      <div class="subhead">Solid palette (for high-contrast badges)</div>
+      <div class="card">
+        <div class="tag-grid">
+          <div class="tag-cell"><div class="tag solidPurple sm">purple</div><div class="nm">purple</div></div>
+          <div class="tag-cell"><div class="tag solidBlue sm">blue</div><div class="nm">blue</div></div>
+          <div class="tag-cell"><div class="tag solidGreen sm">green</div><div class="nm">green</div></div>
+          <div class="tag-cell"><div class="tag solidOrange sm">orange</div><div class="nm">orange</div></div>
+          <div class="tag-cell"><div class="tag solidRed sm">red</div><div class="nm">red</div></div>
+          <div class="tag-cell"><div class="tag dullGray sm">dullGray</div><div class="nm">dullGray</div></div>
+          <div class="tag-cell"><div class="tag darkGray sm">darkGray</div><div class="nm">darkGray</div></div>
+          <div class="tag-cell"><div class="tag white sm">white</div><div class="nm">white (border)</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SELECTION ============ -->
+    <section id="selection">
+      <div class="section-head">
+        <h2>Selection controls</h2><span class="tag">N_CheckboxBtn · N_RadioBtn · N_SwitchBtn</span>
+        <p>All use <b>PURPLE_6</b> as the active color. 16×16px for checkbox/radio. Switches ship in 24 and 18 heights.</p>
+      </div>
+
+      <div class="card">
+        <div class="subhead" style="margin-top:0">Checkbox</div>
+        <div class="sel-row">
+          <div class="sel-item"><div class="cbx"></div>Default</div>
+          <div class="sel-item"><div class="cbx checked"></div>Checked</div>
+          <div class="sel-item"><div class="cbx inter"></div>Intermediate</div>
+          <div class="sel-item"><div class="cbx disabled"></div>Disabled</div>
+          <div class="sel-item"><div class="cbx checked disabled"></div>Checked+disabled</div>
+        </div>
+
+        <div class="subhead">Radio</div>
+        <div class="sel-row">
+          <div class="sel-item"><div class="radio"></div>Default</div>
+          <div class="sel-item"><div class="radio checked"></div>Checked</div>
+          <div class="sel-item"><div class="radio disabled"></div>Disabled</div>
+          <div class="sel-item"><div class="radio checked disabled"></div>Checked+disabled</div>
+        </div>
+
+        <div class="subhead">Switch</div>
+        <div class="sel-row">
+          <div class="sel-item"><div class="switch"><div class="switch-knob"></div></div>Off · 24</div>
+          <div class="sel-item"><div class="switch on"><div class="switch-knob"></div></div>On · 24</div>
+          <div class="sel-item"><div class="switch sm"><div class="switch-knob"></div></div>Off · 18</div>
+          <div class="sel-item"><div class="switch sm on"><div class="switch-knob"></div></div>On · 18</div>
+          <div class="sel-item"><div class="switch disabled"><div class="switch-knob"></div></div>Disabled off</div>
+          <div class="sel-item"><div class="switch on disabled"><div class="switch-knob"></div></div>Disabled on</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TABS & SWITCHTABS ============ -->
+    <section id="tabs-switches">
+      <div class="section-head">
+        <h2>Tabs & Switch-tabs</h2><span class="tag">N_TabStyle1/2 · N_SwitchTab</span>
+        <p>Tabs use GRAY_5 idle → GRAY_9 active with underline. Active counts always turn PURPLE_6.</p>
+      </div>
+
+      <div class="subhead">Underlined tabs</div>
+      <div class="card" style="padding:0 24px 24px">
+        <div class="tabs">
+          <div class="tab active">전체 <span class="count">128</span></div>
+          <div class="tab">서류 검토 <span class="count">42</span></div>
+          <div class="tab">면접 <span class="count">18</span></div>
+          <div class="tab">합격 <span class="count">7</span></div>
+          <div class="tab">불합격</div>
+        </div>
+      </div>
+
+      <div class="subhead">Switch tab (pill)</div>
+      <div class="card">
+        <div class="switchtab" id="switchtab-demo">
+          <div class="switchtab-item active" data-v="list">리스트</div>
+          <div class="switchtab-item" data-v="board">보드</div>
+          <div class="switchtab-item" data-v="calendar">캘린더</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ INFO CARDS ============ -->
+    <section id="info">
+      <div class="section-head">
+        <h2>Info & notification cards</h2><span class="tag">N_InfoCard · N_NotiCard_TwoLine</span>
+        <p>Inline warnings (InfoCard) vs. full-width alerts (NotiCard). Keep copy short — no filler.</p>
+      </div>
+
+      <div class="card">
+        <div class="stack" style="gap:10px">
+          <div class="info gray"><div class="dot"></div><span>지원자 정보를 변경하면 담당자에게 자동으로 알림이 전송됩니다.</span></div>
+          <div class="info purple"><div class="dot"></div><span>이 계정은 관리자 권한으로 생성됩니다.</span></div>
+          <div class="info orange"><div class="dot"></div><span>변경된 내용이 저장되지 않았습니다. 먼저 저장해주세요.</span></div>
+          <div class="info red"><div class="dot"></div><span>삭제된 지원자는 복구할 수 없습니다.</span></div>
+        </div>
+
+        <div style="height:20px"></div>
+
+        <div class="noticard"><span class="tag white xs">NEW</span><span>새로운 지원자가 도착했습니다. 확인해보세요.</span></div>
+        <div style="height:8px"></div>
+        <div class="noticard warning">⚠ 오늘까지 평가를 완료해야 합니다.</div>
+        <div style="height:16px"></div>
+
+        <div class="noticard twoline purple">
+          <div class="noticard-top">
+            <span class="tag solidPurple sm">AI</span>
+            <div class="noticard-title">자동 평가가 완료되었습니다</div>
+          </div>
+          <div style="font-size:13px;color:var(--gray-8);line-height:20px">
+            7명의 지원자 서류가 AI로 사전 평가되었습니다. 결과를 검토한 후 다음 단계로 진행해주세요.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ AVATARS ============ -->
+    <section id="avatars">
+      <div class="section-head">
+        <h2>Avatars</h2><span class="tag">N_UserAvatar · N_Avatar</span>
+        <p>Circular, with a 1px GRAY_3 outline. Fallback renders the first character of the user's name on a brand-colored fill.</p>
+      </div>
+
+      <div class="card">
+        <div class="avatar-row">
+          <div class="avatar-item"><div class="avatar a-16" style="background:#6643FF">김</div><div class="lbl">16</div></div>
+          <div class="avatar-item"><div class="avatar a-20" style="background:#DA3A2D">이</div><div class="lbl">20</div></div>
+          <div class="avatar-item"><div class="avatar a-24" style="background:#138748">박</div><div class="lbl">24</div></div>
+          <div class="avatar-item"><div class="avatar a-32" style="background:#1787ee">최</div><div class="lbl">32</div></div>
+          <div class="avatar-item"><div class="avatar a-40" style="background:#9060EE">정</div><div class="lbl">40</div></div>
+          <div class="avatar-item"><div class="avatar a-56" style="background:#EE7843">윤</div><div class="lbl">56</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MODAL ============ -->
+    <section id="modal">
+      <div class="section-head">
+        <h2>Modal</h2><span class="tag">N_Modal</span>
+        <p>8px radius, Shadow._1, 0.4 overlay. Confirm buttons align right, cancel second-from-right.</p>
+      </div>
+      <div class="modal-preview">
+        <div class="modal">
+          <div class="modal-body">
+            <h3 class="modal-title">지원자를 삭제하시겠습니까?</h3>
+            <p class="modal-desc">삭제된 지원자 정보는 복구할 수 없습니다. 정말 진행할까요?</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-40 border black">취소</button>
+            <button class="btn btn-40 filled warning">삭제</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ USAGE ============ -->
+    <section id="usage">
+      <div class="section-head">
+        <h2>Usage rules</h2><span class="tag">Principles</span>
+        <p>When building new screens, default to these behaviours unless a spec explicitly overrides.</p>
+      </div>
+
+      <div class="do-dont">
+        <div class="do">
+          <div class="bar">✓ Do</div>
+          <div class="body">
+            <ul style="margin:0;padding-left:18px;line-height:24px;color:var(--gray-8);font-size:14px">
+              <li>Primary CTAs → <b>Filled · Purple</b>, size 40 by default.</li>
+              <li>Destructive CTAs → <b>Filled · Warning</b>. Always pair with a <b>Border · Black</b> 취소 button.</li>
+              <li>Text inside cards → <b>GRAY_8</b>. Titles → <b>GRAY_9</b>. Supporting → <b>GRAY_7</b>.</li>
+              <li>Use <b>Body size 14</b> as the default body size for all UI.</li>
+              <li>Form field heights: <b>40</b> in cards & rows, <b>48</b> in modals & onboarding.</li>
+              <li>Tag sizes: <b>SM</b> for inline status, <b>XS</b> only inside dense tables, <b>LG</b> for feature highlights.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="dont">
+          <div class="bar">✕ Don't</div>
+          <div class="body">
+            <ul style="margin:0;padding-left:18px;line-height:24px;color:var(--gray-8);font-size:14px">
+              <li>Don't invent new hex values — pick from <span class="mono">Color.ts</span>.</li>
+              <li>Don't use multiple purples on one screen. PURPLE_6 is the only brand accent.</li>
+              <li>Don't stack filled buttons. One primary per view.</li>
+              <li>Don't use Borderless black for destructive actions — use Borderless warning.</li>
+              <li>Don't set font-size directly. Use <b>Body / Heading</b> components.</li>
+              <li>Don't use the Gradient tokens outside of marketing/upsell surfaces.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // Inject real SVG icons for the IconButton showcase.
+  // Placeholder `__ICON__` gets a generic plus; labeled placeholders get their named icon.
+  const ICON_SVGS = {
+    plus:    '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 5a1 1 0 1 0-2 0v6H5a1 1 0 1 0 0 2h6v6a1 1 0 1 0 2 0v-6h6a1 1 0 1 0 0-2h-6V5Z"/></svg>',
+    close:   '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.22 6.22a.75.75 0 0 1 1.06 0L12 10.94l4.72-4.72a.75.75 0 1 1 1.06 1.06L13.06 12l4.72 4.72a.75.75 0 0 1-1.06 1.06L12 13.06l-4.72 4.72a.75.75 0 0 1-1.06-1.06L10.94 12 6.22 7.28a.75.75 0 0 1 0-1.06Z"/></svg>',
+    more:    '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 12a2 2 0 1 1 4 0 2 2 0 0 1-4 0Zm4 0a2 2 0 1 1 4 0 2 2 0 0 1-4 0Zm6 0a2 2 0 1 1 4 0 2 2 0 0 1-4 0Z"/></svg>',
+    search:  '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 3a7.5 7.5 0 1 1-4.77 13.29l-3.48 3.48a1 1 0 0 1-1.42-1.41l3.48-3.48A7.5 7.5 0 0 1 10.5 3Zm0 2a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Z"/></svg>',
+    filter:  '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 5.75A.75.75 0 0 1 4.75 5h14.5a.75.75 0 0 1 .6 1.2l-5.6 7.35V19a.75.75 0 0 1-1.16.63l-2.5-1.62A.75.75 0 0 1 10.25 17v-3.45L4.65 6.2A.75.75 0 0 1 4 5.75Z"/></svg>',
+    edit:    '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16.06 3.56a2.5 2.5 0 0 1 3.54 3.54l-10.3 10.3a2 2 0 0 1-.93.52l-3.53.88a.75.75 0 0 1-.91-.91l.88-3.53a2 2 0 0 1 .52-.93l10.73-9.87Zm1.06 1.06L6.82 14.93l-.6 2.38 2.38-.6L18.88 6.44a1 1 0 0 0-1.42-1.41 1 1 0 0 0-.34-.41Z"/></svg>',
+    trash:   '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 3.75A.75.75 0 0 1 9.75 3h4.5a.75.75 0 0 1 .75.75V5h4.25a.75.75 0 0 1 0 1.5h-.76l-.82 12.3A2.5 2.5 0 0 1 15.18 21H8.82a2.5 2.5 0 0 1-2.49-2.2L5.51 6.5H4.75a.75.75 0 0 1 0-1.5H9V3.75ZM7.02 6.5l.8 12.2a1 1 0 0 0 1 .8h6.36a1 1 0 0 0 1-.8l.8-12.2H7.02ZM10.5 9a.75.75 0 0 1 .75.75v6a.75.75 0 0 1-1.5 0v-6A.75.75 0 0 1 10.5 9Zm3 0a.75.75 0 0 1 .75.75v6a.75.75 0 0 1-1.5 0v-6A.75.75 0 0 1 13.5 9Z"/></svg>',
+    download:'<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3a1 1 0 0 1 1 1v9.59l3.3-3.3a1 1 0 0 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 0 1 1.4-1.42l3.3 3.3V4a1 1 0 0 1 1-1ZM4 19a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1Z"/></svg>',
+    chevron: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.3 5.3a1 1 0 0 1 1.4 0l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 1 1-1.4-1.4L13.58 12 8.3 6.7a1 1 0 0 1 0-1.4Z"/></svg>',
+  };
+  document.querySelectorAll('.icbtn').forEach(btn => {
+    // Replace any text content "__ICON__" and its labeled variants with real SVGs.
+    const html = btn.innerHTML.trim();
+    const labeled = html.match(/__ICON_([A-Z]+)__/);
+    if (labeled) {
+      const name = labeled[1].toLowerCase();
+      btn.innerHTML = ICON_SVGS[name] || ICON_SVGS.plus;
+    } else if (html.includes('__ICON__')) {
+      btn.innerHTML = ICON_SVGS.plus;
+    }
+  });
+
+  // Build palette grids from JS (keeps CSS short)
+  const PALETTES = {
+    'palette-purple': { name: 'PURPLE', steps: ['#220476','#310099','#4306C6','#541DF0','#6643FF','#857AFF','#B2B6FF','#D1D3FF','#E5E8FF','#F0F0FF'] },
+    'palette-gray':   { name: 'GRAY',   steps: ['#1B212C','#343B46','#505766','#6D7584','#8B93A1','#AFB5C2','#D0D5DC','#E4E7EC','#F2F3F6','#F9F9FB'] },
+    'palette-red':    { name: 'RED',    steps: ['#5c0c11','#821216','#a82020','#e0362b','#f2584e','#ff8173','#ffaaa4','#fccfd1','#fcebea','#fff3f0'] },
+    'palette-green':  { name: 'GREEN',  steps: ['#08271d','#0a3d2b','#166344','#258a5e','#30a86f','#5bbd8c','#81c9a3','#b7e1ca','#d2edde','#e1f0e7'] },
+    'palette-orange': { name: 'ORANGE', steps: ['#571c04','#7d2d07','#a34512','#c96120','#ef8132','#ffa358','#ffc187','#ffd9b0','#ffeed9','#fff9f0'] },
+    'palette-yellow': { name: 'YELLOW', steps: ['#4e3506','#825d0d','#a88019','#cfa529','#f5cd3d','#ffe369','#ffef91','#fff7ba','#fffde3','#fffef0'] },
+    'palette-blue':   { name: 'BLUE',   steps: ['#002054','#00337a','#0048a1','#016ed3','#1787ee','#4e9cf6','#6fb2f0','#acd0f2','#c8e4ff','#e4f1fd'] },
+    'palette-mint':   { name: 'MINT',   steps: ['#0c3540','#145866','#237e8c','#36a6b3','#4bcfd8','#75e2e6','#9eeeee','#c0faf8','#dbf9f7','#f0fffd'] },
+    'palette-pgray':  { name: 'PURPLE-GRAY', steps: ['#38325A','#5B5474','#9190B1','#A5A5C6','#BDBDD7','#CDCEE4','#DBDBE9','#E9E9F0','#EEEDF3','#F4F5FA'] },
+    'palette-bgray':  { name: 'BLUE-GRAY',   steps: ['#293942','#43525A','#5B717C','#849CA8','#A7BAC3','#B4C8D2','#CFDBE1','#E6EBEE','#EAF1F5','#F2F6F9'] },
+  };
+  Object.entries(PALETTES).forEach(([id, p]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const label = document.createElement('div');
+    label.className = 'swatch-label';
+    label.style.gridColumn = 'span 1';
+    label.style.alignSelf = 'center';
+    label.innerHTML = '<div style="font-weight:700;color:var(--gray-9);font-size:12px">'+p.name+'</div><div class="swatch-hex">10 → 1</div>';
+    el.appendChild(label);
+    p.steps.forEach((hex, i) => {
+      const step = 10 - i;
+      const sw = document.createElement('div');
+      sw.className = 'swatch';
+      const textOn = step >= 6 ? '#FFFFFF' : 'var(--gray-9)';
+      sw.innerHTML = `
+        <div class="swatch-chip" style="background:${hex}">
+          <div style="height:100%;display:flex;align-items:flex-end;justify-content:flex-end;padding:6px;font-size:10px;font-weight:700;color:${textOn};font-family:'SF Mono',Menlo,monospace">${step}</div>
+        </div>
+        <div class="swatch-hex">${hex.toUpperCase()}</div>`;
+      el.appendChild(sw);
+    });
+  });
+
+  // Active-section highlighting in sidebar
+  const navLinks = document.querySelectorAll('.nav a');
+  const sections = [...document.querySelectorAll('section[id]')];
+  const onScroll = () => {
+    const y = window.scrollY + 80;
+    let current = sections[0]?.id;
+    for (const s of sections) if (s.offsetTop <= y) current = s.id;
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+  };
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // SwitchTab demo interaction
+  const st = document.getElementById('switchtab-demo');
+  if (st) st.addEventListener('click', (e) => {
+    const t = e.target.closest('.switchtab-item');
+    if (!t) return;
+    st.querySelectorAll('.switchtab-item').forEach(i => i.classList.remove('active'));
+    t.classList.add('active');
+  });
+</script>
+</body>
+</html>
