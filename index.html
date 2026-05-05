@@ -73,7 +73,7 @@
   html, body { margin:0; padding:0; }
   body {
     font-family: 'Pretendard', -apple-system, sans-serif;
-    background: var(--bg-secondary);
+    background: var(--white);
     color: var(--text-title);
     -webkit-font-smoothing: antialiased;
     font-feature-settings: 'ss01';
@@ -121,7 +121,7 @@
   main { padding: 40px 56px 120px; max-width: 1200px; }
 
   /* Hero */
-  .hero { padding: 24px 0 40px; border-bottom: 1px solid var(--border-primary); margin-bottom: 48px; }
+  .hero { display: none; }
   .hero .kicker { font-size: 12px; font-weight: 700; color: var(--purple-6); letter-spacing: 0.6px; text-transform: uppercase; }
   .hero h1 { font-size: 42px; line-height: 140%; letter-spacing: -1px; font-weight: 700; margin: 6px 0 10px; color: var(--gray-9); }
   .hero p { font-size: 15px; color: var(--gray-7); max-width: 640px; line-height: 24px; margin: 0; }
@@ -144,9 +144,9 @@
 
   .subhead {
     font-size: 13px; font-weight: 700; color: var(--gray-8);
-    margin: 20px 0 12px; display:flex; align-items: center; gap: 10px;
+    margin: 36px 0 12px; display:flex; align-items: center; gap: 10px;
   }
-  .subhead:before { content:""; width: 3px; height: 14px; background: var(--purple-6); border-radius: 2px; }
+  .subhead:before { display: none; }
 
   /* Cards */
   .card {
@@ -157,18 +157,34 @@
 
   /* ---------- Colors ---------- */
   .palette-grid {
-    display: grid; grid-template-columns: repeat(11, 1fr); gap: 6px;
-    margin-bottom: 18px;
+    display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px;
+    margin-bottom: 40px;
   }
   .swatch {
     display: flex; flex-direction: column; gap: 6px;
   }
   .swatch-chip {
-    height: 56px; border-radius: 6px;
-    border: 1px solid rgba(0,0,0,0.04);
+    aspect-ratio: 1; width: 100%; border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.06);
+    cursor: pointer; position: relative;
   }
+  .swatch-chip:hover::after {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(0,0,0,0.2); border-radius: 6px;
+    pointer-events: none;
+  }
+  .copy-toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    background: var(--gray-9); color: #fff;
+    padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    pointer-events: none; opacity: 0; transition: opacity 0.2s;
+    z-index: 9999;
+  }
+  .copy-toast.show { opacity: 1; }
   .swatch-label { font-size: 11px; font-weight: 600; color: var(--gray-8); line-height: 1.3; }
   .swatch-hex { font-size: 10px; color: var(--gray-6); font-family: 'SF Mono', Menlo, monospace; }
+  .palette-name { font-size: 13px; font-weight: 700; color: var(--gray-8); margin: 0 0 8px; }
+  .semantic-category { font-size: 12px; font-weight: 700; color: var(--gray-6); text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 10px; }
   .palette-title { display:flex; justify-content: space-between; align-items: baseline; margin: 14px 0 8px; }
   .palette-title h4 { font-size: 14px; font-weight: 700; color: var(--gray-9); margin: 0; }
   .palette-title span { font-size: 12px; color: var(--gray-6); }
@@ -236,16 +252,20 @@
   .s5{box-shadow:var(--shadow-5)} .s6{box-shadow:var(--shadow-6)} .s7{box-shadow:var(--shadow-7)} .s8{box-shadow:var(--shadow-8)}
 
   /* Radii */
-  .radius-row { display:flex; gap: 20px; align-items: flex-end; }
-  .radius-item { display:flex; flex-direction: column; gap:8px; align-items: flex-start; }
-  .radius-box { width: 72px; height: 72px; background: var(--purple-1); border: 1px solid var(--purple-3); }
+  .radius-row { display:flex; flex-direction: column; gap: 0; }
+  .radius-item {
+    display: flex; align-items: center; gap: 20px;
+    padding: 16px 0; border-bottom: 1px solid var(--border-primary);
+  }
+  .radius-item:last-child { border-bottom: none; }
+  .radius-box { width: 56px; height: 56px; background: var(--purple-1); border: 1px solid var(--purple-3); flex-shrink: 0; }
   .radius-box.r4 { border-radius: 4px; }
   .radius-box.r6 { border-radius: 6px; }
   .radius-box.r8 { border-radius: 8px; }
   .radius-box.r16 { border-radius: 16px; }
   .radius-box.rfull { border-radius: 999px; }
-  .radius-item .lbl { font-size: 12px; font-weight: 700; color: var(--gray-9); }
-  .radius-item .sub { font-size: 10px; color: var(--gray-6); font-family: 'SF Mono', Menlo, monospace; }
+  .radius-item .lbl { font-size: 13px; font-weight: 700; color: var(--gray-9); width: 48px; flex-shrink: 0; }
+  .radius-item .sub { font-size: 12px; color: var(--gray-6); margin-left: auto; text-align: right; }
 
   /* ---------- Buttons (N_Button) ---------- */
   .btn {
@@ -369,7 +389,7 @@
   .icbtn.dark.filled:disabled { background: var(--gray-4); }
 
   .icbtn-grid {
-    display: grid; grid-template-columns: 110px repeat(6, 1fr); gap: 20px 18px;
+    display: grid; grid-template-columns: 160px repeat(4, 1fr); gap: 16px 24px;
     align-items: center;
   }
   .icbtn-grid .col-h {
@@ -386,12 +406,9 @@
   .icbtn-cell.dark {
     background: var(--gray-10); border-radius: 8px;
   }
-  .icbtn-spec {
-    display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px;
-    font-size: 11px; color: var(--gray-7); font-family: 'SF Mono', Menlo, monospace;
-    text-align: center; margin-top: 4px;
-  }
-  .icbtn-spec div b { display: block; font-size: 13px; color: var(--gray-9); margin-bottom: 2px; font-family: 'Pretendard', sans-serif; }
+  .icbtn-row-h { display: flex; flex-direction: column; gap: 3px; }
+  .icbtn-row-h .sz { font-size: 13px; font-weight: 700; color: var(--gray-9); }
+  .icbtn-row-h .spec { font-size: 11px; color: var(--gray-5); font-family: 'SF Mono', Menlo, monospace; }
 
   /* ---------- Inputs ---------- */
   .input {
@@ -579,18 +596,54 @@
   /* ---------- Avatars ---------- */
   .avatar {
     display: inline-flex; align-items: center; justify-content: center;
-    border-radius: 50%; outline: 1px solid var(--gray-3); overflow: hidden;
-    font-weight: 700; color: var(--white); letter-spacing: -0.2px;
+    outline: 1px solid var(--gray-3); overflow: hidden;
+    font-weight: 700; color: var(--white); letter-spacing: -0.2px; flex-shrink: 0;
   }
-  .avatar.a-16 { width: 16px; height: 16px; font-size: 8px; }
-  .avatar.a-20 { width: 20px; height: 20px; font-size: 10px; }
-  .avatar.a-24 { width: 24px; height: 24px; font-size: 11px; }
-  .avatar.a-32 { width: 32px; height: 32px; font-size: 13px; }
-  .avatar.a-40 { width: 40px; height: 40px; font-size: 15px; }
-  .avatar.a-56 { width: 56px; height: 56px; font-size: 20px; }
-  .avatar-row { display:flex; align-items: flex-end; gap: 20px; }
+  .avatar.a-72 { width:72px; height:72px; border-radius:24px; font-size:28px; }
+  .avatar.a-64 { width:64px; height:64px; border-radius:16px; font-size:24px; }
+  .avatar.a-40 { width:40px; height:40px; border-radius:14px; font-size:16px; }
+  .avatar.a-32 { width:32px; height:32px; border-radius:12px; font-size:13px; }
+  .avatar.a-28 { width:28px; height:28px; border-radius:8px; font-size:11px; }
+  .avatar.a-24 { width:24px; height:24px; border-radius:8px; font-size:10px; }
+  .avatar.a-20 { width:20px; height:20px; border-radius:6px; font-size:9px; }
+  .avatar.a-16 { width:16px; height:16px; border-radius:5px; font-size:8px; }
+  .avatar.a-10 { width:10px; height:10px; border-radius:3px; font-size:6px; }
+  .avatar.word  { background: var(--pg-7); }
+  .avatar.user  { background: var(--gray-2); color: var(--gray-6); }
+  .avatar.group { background: var(--purple-2); color: var(--purple-6); }
+  .avatar-row { display:flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
   .avatar-item { display:flex; flex-direction: column; gap: 6px; align-items: center; }
-  .avatar-item .lbl { font-size: 11px; color: var(--gray-6); font-family: 'SF Mono', Menlo, monospace; }
+  .avatar-item .lbl { font-size: 12px; font-weight: 700; color: var(--gray-9); }
+  .avatar-item .sub { font-size: 10px; color: var(--gray-5); font-family: 'SF Mono', Menlo, monospace; }
+
+  /* Avatar Group */
+  .avatar-group-wrap { display:flex; align-items:center; gap:8px; padding:8px; border-radius:6px; display:inline-flex; }
+  .avatar-group-wrap:hover { background: var(--hover-01-opacity); cursor:pointer; }
+  .avatar-stack { display:flex; }
+  .avatar-stack .avatar { outline: 2px solid var(--white); }
+  .avatar-stack .avatar + .avatar { margin-left: -4px; }
+
+  /* Chips */
+  .chip {
+    display: inline-flex; align-items: center; height: 28px; gap: 6px;
+    border-radius: 4px; padding: 0 8px;
+    border: 1px solid var(--gray-3); background: var(--white); white-space: nowrap; cursor: pointer;
+  }
+  .chip:hover { background: var(--hover-01-opacity); }
+  .chip-text { font-size: 12px; font-weight: 700; color: var(--gray-9); }
+  .chip-del { width:20px; height:20px; border-radius:4px; border:none; background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--gray-6); font-size:16px; line-height:1; }
+  .chip-del:hover { background: var(--gray-2); }
+
+  /* Tab step counter */
+  .tab-step { width:20px; height:20px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; }
+  .tab-step.default { background:var(--gray-4); color:var(--white); }
+  .tab-step.active  { background:var(--purple-6); color:var(--white); }
+  .tab-step.done    { background:var(--purple-1); color:var(--purple-6); }
+  .tab-step-row { display:flex; gap:8px; align-items:center; }
+
+  /* Tab size variants */
+  .tab.s42 { padding: 12px 0 12px; font-size: 12px; }
+  .tab.s36 { padding: 8px 0 10px; font-size: 12px; }
 
   /* ---------- Modal preview ---------- */
   .modal-preview {
@@ -622,6 +675,97 @@
   .dont .bar { background: var(--red-1); color: var(--red-7); }
   .do .body, .dont .body { padding: 20px; }
 
+  /* ---------- Theme Showcase ---------- */
+  .theme-toggle {
+    display: inline-flex; border: 1px solid var(--border-primary);
+    border-radius: 8px; overflow: hidden; margin-bottom: 20px;
+  }
+  .theme-btn {
+    padding: 7px 20px; font-size: 13px; font-weight: 600;
+    border: none; background: transparent; cursor: pointer;
+    color: var(--gray-6); font-family: inherit;
+  }
+  .theme-btn.active { background: var(--gray-9); color: #fff; }
+
+  .theme-canvas {
+    border: 1px solid var(--border-primary); border-radius: 12px;
+    padding: 28px; background: var(--gray-1);
+  }
+  .theme-canvas[data-mode="dark"] { background: #1B212C; border-color: #343B46; }
+
+  .theme-token-strip {
+    display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px;
+    padding-bottom: 24px; border-bottom: 1px solid var(--border-primary);
+  }
+  .theme-canvas[data-mode="dark"] .theme-token-strip { border-color: #343B46; }
+  .theme-token-item { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+  .theme-token-chip {
+    width: 40px; height: 40px; border-radius: 6px;
+  }
+  .theme-token-label { font-size: 10px; color: var(--gray-6); text-align: center; white-space: nowrap; }
+
+  .theme-ui-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .theme-card {
+    background: #fff; border: 1px solid var(--border-primary);
+    border-radius: 10px; padding: 20px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .theme-canvas[data-mode="dark"] .theme-card { background: #343B46; border-color: #505766; }
+
+  .theme-card-header { display: flex; justify-content: space-between; align-items: flex-start; }
+  .theme-card-title { font-size: 15px; font-weight: 700; color: var(--gray-9); margin-bottom: 4px; }
+  .theme-card-sub { font-size: 12px; color: var(--gray-6); }
+  .theme-canvas[data-mode="dark"] .theme-card-title { color: #F9F9FB; }
+  .theme-canvas[data-mode="dark"] .theme-card-sub { color: #8B93A1; }
+
+  .theme-badge {
+    font-size: 11px; font-weight: 700; padding: 3px 8px;
+    border-radius: 4px; background: var(--purple-1); color: var(--purple-6);
+  }
+  .theme-card-body { display: flex; flex-direction: column; gap: 8px; }
+  .theme-field { display: flex; justify-content: space-between; align-items: center; }
+  .theme-field-label { font-size: 13px; color: var(--gray-6); }
+  .theme-field-value { font-size: 13px; font-weight: 600; color: var(--gray-9); }
+  .theme-accent { color: var(--purple-6) !important; }
+  .theme-canvas[data-mode="dark"] .theme-field-label { color: #8B93A1; }
+  .theme-canvas[data-mode="dark"] .theme-field-value { color: #F9F9FB; }
+
+  .theme-card-footer { display: flex; gap: 8px; justify-content: flex-end; }
+  .theme-btn-primary {
+    padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer;
+    background: var(--purple-6); color: #fff; font-size: 13px; font-weight: 700; font-family: inherit;
+  }
+  .theme-btn-secondary {
+    padding: 8px 16px; border-radius: 6px; cursor: pointer;
+    background: transparent; border: 1px solid var(--gray-3);
+    color: var(--gray-8); font-size: 13px; font-weight: 600; font-family: inherit;
+  }
+  .theme-canvas[data-mode="dark"] .theme-btn-secondary { border-color: #505766; color: #AFB5C2; background: transparent; }
+
+  .theme-input-wrap { display: flex; flex-direction: column; gap: 5px; }
+  .theme-input-label { font-size: 12px; font-weight: 700; color: var(--gray-8); }
+  .theme-input {
+    height: 36px; border-radius: 6px; border: 1px solid var(--gray-3);
+    background: #fff; padding: 0 12px; font-size: 14px; color: var(--gray-9);
+    display: flex; align-items: center;
+  }
+  .theme-input-placeholder { color: var(--gray-5); }
+  .theme-input-focused { border: 2px solid var(--gray-7); }
+  .theme-canvas[data-mode="dark"] .theme-input-label { color: #AFB5C2; }
+  .theme-canvas[data-mode="dark"] .theme-input { background: #293038; border-color: #505766; color: #F9F9FB; }
+  .theme-canvas[data-mode="dark"] .theme-input-placeholder { color: #6D7584; }
+  .theme-canvas[data-mode="dark"] .theme-input-focused { border-color: #8B93A1; }
+
+  .theme-coming-soon {
+    font-size: 12px; color: var(--gray-5); text-align: center;
+    padding: 12px; border: 1px dashed var(--gray-3); border-radius: 6px;
+  }
+  .theme-canvas[data-mode="dark"] .theme-coming-soon { color: #505766; border-color: #505766; }
+
+  /* Multi-page: hide all sections, show only active */
+  section[id] { display: none; }
+  section[id].page-active { display: block; }
+
   /* Utility */
   .stack { display: flex; flex-direction: column; gap: 8px; }
   .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
@@ -643,9 +787,15 @@
     <div class="brand"><img src="assets/ninehire-logo.svg" alt="Ninehire" style="height:18px;width:auto;display:block"/></div>
 
     <div class="nav-group">
+      <div class="nav-group-title">Showcase</div>
+      <nav class="nav">
+        <a href="#showcase">Theme Showcase</a>
+      </nav>
+    </div>
+    <div class="nav-group">
       <div class="nav-group-title">Foundation</div>
       <nav class="nav">
-        <a href="#colors" class="active">Colors</a>
+        <a href="#colors">Colors</a>
         <a href="#typography">Typography</a>
         <a href="#shadow-radius">Shadow & Radius</a>
       </nav>
@@ -686,6 +836,71 @@
       </div>
     </div>
 
+    <!-- ============ SHOWCASE ============ -->
+    <section id="showcase">
+      <div class="section-head">
+        <h2>Theme Showcase</h2>
+        <p>라이트 / 다크 모드에서 Semantic Token이 실제 UI에 어떻게 적용되는지 보여줍니다. 다크 모드 변수는 Figma Variable 기준이며 코드 등록 예정입니다.</p>
+      </div>
+
+      <div class="theme-toggle" id="theme-toggle">
+        <button class="theme-btn active" data-theme="light">Light</button>
+        <button class="theme-btn" data-theme="dark">Dark</button>
+      </div>
+
+      <div class="theme-canvas" id="theme-canvas" data-mode="light">
+        <div class="theme-token-strip">
+          <div class="theme-token-item"><div class="theme-token-chip" data-token="text-title"></div><div class="theme-token-label">Text / Title</div></div>
+          <div class="theme-token-item"><div class="theme-token-chip" data-token="text-primary"></div><div class="theme-token-label">Text / Primary</div></div>
+          <div class="theme-token-item"><div class="theme-token-chip" data-token="text-secondary"></div><div class="theme-token-label">Text / Secondary</div></div>
+          <div class="theme-token-item"><div class="theme-token-chip" data-token="text-tertiary"></div><div class="theme-token-label">Text / Tertiary</div></div>
+          <div class="theme-token-item"><div class="theme-token-chip" data-token="text-placeholder"></div><div class="theme-token-label">Text / Placeholder</div></div>
+          <div class="theme-token-item"><div class="theme-token-chip" data-token="bg-primary" style="border:1px solid var(--gray-3)"></div><div class="theme-token-label">BG / Primary</div></div>
+          <div class="theme-token-item"><div class="theme-token-chip" data-token="bg-secondary"></div><div class="theme-token-label">BG / Secondary</div></div>
+          <div class="theme-token-item"><div class="theme-token-chip" data-token="bg-tertiary"></div><div class="theme-token-label">BG / Tertiary</div></div>
+          <div class="theme-token-item"><div class="theme-token-chip" data-token="border-primary"></div><div class="theme-token-label">Border / Primary</div></div>
+          <div class="theme-token-item"><div class="theme-token-chip" data-token="border-focused"></div><div class="theme-token-label">Border / Focused</div></div>
+        </div>
+
+        <div class="theme-ui-wrap">
+          <div class="theme-card">
+            <div class="theme-card-header">
+              <div>
+                <div class="theme-card-title">채용 공고 · 프론트엔드 개발자</div>
+                <div class="theme-card-sub">2025.04.01 – 2025.05.01</div>
+              </div>
+              <span class="theme-badge">진행중</span>
+            </div>
+            <div class="theme-card-body">
+              <div class="theme-field"><span class="theme-field-label">지원자</span><span class="theme-field-value">128명</span></div>
+              <div class="theme-field"><span class="theme-field-label">서류 통과</span><span class="theme-field-value">42명</span></div>
+              <div class="theme-field"><span class="theme-field-label">최종 합격</span><span class="theme-field-value theme-accent">3명</span></div>
+            </div>
+            <div class="theme-card-footer">
+              <button class="theme-btn-secondary">상세보기</button>
+              <button class="theme-btn-primary">지원자 관리</button>
+            </div>
+          </div>
+
+          <div class="theme-card" style="gap:12px">
+            <div class="theme-input-wrap">
+              <div class="theme-input-label">이름</div>
+              <div class="theme-input">김지원</div>
+            </div>
+            <div class="theme-input-wrap">
+              <div class="theme-input-label">이메일</div>
+              <div class="theme-input theme-input-placeholder">이메일을 입력하세요</div>
+            </div>
+            <div class="theme-input-wrap">
+              <div class="theme-input-label">포지션</div>
+              <div class="theme-input theme-input-focused">프론트엔드 개발자</div>
+            </div>
+            <div class="theme-coming-soon">🔧 다크 모드 토큰 등록 후 자동 반영</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ COLORS ============ -->
     <section id="colors">
       <div class="section-head">
@@ -693,35 +908,61 @@
         <p>10-step scales anchored to the primary purple. Prefer semantic tokens from <span class="mono">NeutralColorTokens.ts</span> in product code.</p>
       </div>
 
-      <div class="subhead">Semantic tokens</div>
-      <div class="semantic-grid">
+      <div class="palette-name">Purple</div>
+      <div class="palette-grid" id="palette-purple"></div>
+
+      <div class="palette-name">Gray</div>
+      <div class="palette-grid" id="palette-gray"></div>
+
+      <div class="palette-name">Red</div>
+      <div class="palette-grid" id="palette-red"></div>
+
+      <div class="palette-name">Green</div>
+      <div class="palette-grid" id="palette-green"></div>
+
+      <div class="palette-name">Orange</div>
+      <div class="palette-grid" id="palette-orange"></div>
+
+      <div class="palette-name">Yellow</div>
+      <div class="palette-grid" id="palette-yellow"></div>
+
+      <div class="palette-name">Blue</div>
+      <div class="palette-grid" id="palette-blue"></div>
+
+      <div class="palette-name">Mint</div>
+      <div class="palette-grid" id="palette-mint"></div>
+
+      <div class="palette-name">Purple-gray</div>
+      <div class="palette-grid" id="palette-pgray"></div>
+
+      <div class="palette-name">Blue-gray</div>
+      <div class="palette-grid" id="palette-bgray"></div>
+
+      <div class="subhead">Semantic Tokens</div>
+
+      <div class="semantic-category">Text</div>
+      <div class="semantic-grid" style="margin-bottom:24px">
         <div class="semantic"><div class="semantic-preview" style="background:var(--gray-9)"></div><div class="semantic-body"><div class="name">Text / Title</div><div class="token">TextTitle → GRAY_9</div></div></div>
         <div class="semantic"><div class="semantic-preview" style="background:var(--gray-8)"></div><div class="semantic-body"><div class="name">Text / Primary</div><div class="token">TextPrimary → GRAY_8</div></div></div>
         <div class="semantic"><div class="semantic-preview" style="background:var(--gray-7)"></div><div class="semantic-body"><div class="name">Text / Secondary</div><div class="token">TextSecondary → GRAY_7</div></div></div>
         <div class="semantic"><div class="semantic-preview" style="background:var(--gray-6)"></div><div class="semantic-body"><div class="name">Text / Tertiary</div><div class="token">TextTertiary → GRAY_6</div></div></div>
         <div class="semantic"><div class="semantic-preview" style="background:var(--gray-5)"></div><div class="semantic-body"><div class="name">Text / Placeholder</div><div class="token">TextPlaceholder → GRAY_5</div></div></div>
-        <div class="semantic"><div class="semantic-preview" style="background:var(--white);border-bottom:1px solid var(--border-primary)"></div><div class="semantic-body"><div class="name">BG / Primary</div><div class="token">BackgroundPrimary → WHITE</div></div></div>
-        <div class="semantic"><div class="semantic-preview" style="background:var(--gray-1)"></div><div class="semantic-body"><div class="name">BG / Secondary</div><div class="token">BackgroundSecondary → GRAY_1</div></div></div>
-        <div class="semantic"><div class="semantic-preview" style="background:var(--gray-3)"></div><div class="semantic-body"><div class="name">Border / Primary</div><div class="token">BorderPrimary → GRAY_3</div></div></div>
+        <div class="semantic"><div class="semantic-preview" style="background:var(--gray-1);border-bottom:1px solid var(--border-primary)"></div><div class="semantic-body"><div class="name">Text / On Color</div><div class="token">TextOnColor → GRAY_1</div></div></div>
       </div>
 
-      <div class="subhead">Primary — Purple</div>
-      <div class="palette-grid" id="palette-purple"></div>
+      <div class="semantic-category">Background</div>
+      <div class="semantic-grid" style="margin-bottom:24px">
+        <div class="semantic"><div class="semantic-preview" style="background:var(--white);border-bottom:1px solid var(--border-primary)"></div><div class="semantic-body"><div class="name">BG / Primary</div><div class="token">BackgroundPrimary → WHITE</div></div></div>
+        <div class="semantic"><div class="semantic-preview" style="background:var(--gray-1)"></div><div class="semantic-body"><div class="name">BG / Secondary</div><div class="token">BackgroundSecondary → GRAY_1</div></div></div>
+        <div class="semantic"><div class="semantic-preview" style="background:var(--gray-2)"></div><div class="semantic-body"><div class="name">BG / Tertiary</div><div class="token">BackgroundTertiary → GRAY_2</div></div></div>
+      </div>
 
-      <div class="subhead">Neutrals — Gray</div>
-      <div class="palette-grid" id="palette-gray"></div>
+      <div class="semantic-category">Border</div>
+      <div class="semantic-grid">
+        <div class="semantic"><div class="semantic-preview" style="background:var(--gray-3)"></div><div class="semantic-body"><div class="name">Border / Primary</div><div class="token">BorderPrimary → GRAY_3</div></div></div>
+        <div class="semantic"><div class="semantic-preview" style="background:var(--gray-5)"></div><div class="semantic-body"><div class="name">Border / Focused</div><div class="token">BorderFocused → GRAY_5</div></div></div>
+      </div>
 
-      <div class="subhead">Red · Green · Orange · Yellow</div>
-      <div class="palette-grid" id="palette-red"></div>
-      <div class="palette-grid" id="palette-green"></div>
-      <div class="palette-grid" id="palette-orange"></div>
-      <div class="palette-grid" id="palette-yellow"></div>
-
-      <div class="subhead">Blue · Mint · Purple-gray · Blue-gray</div>
-      <div class="palette-grid" id="palette-blue"></div>
-      <div class="palette-grid" id="palette-mint"></div>
-      <div class="palette-grid" id="palette-pgray"></div>
-      <div class="palette-grid" id="palette-bgray"></div>
     </section>
 
     <!-- ============ TYPOGRAPHY ============ -->
@@ -869,90 +1110,106 @@
         <button class="btn btn-48 filled purple" style="width:100%">Block (width:100%)</button>
       </div>
 
-      <div class="subhead" id="icon-buttons">Icon Button (N_IconButton) · Light mode</div>
+    </section>
+
+    <!-- ============ ICON BUTTONS ============ -->
+    <section id="icon-buttons">
+      <div class="section-head">
+        <h2>Icon Buttons</h2><span class="tag">N_IconButton</span>
+      </div>
+
+      <div class="subhead">Light mode</div>
       <div class="card">
         <div class="icbtn-grid">
           <div></div>
-          <div class="col-h">20</div><div class="col-h">24</div><div class="col-h">28</div>
-          <div class="col-h">32</div><div class="col-h">36</div><div class="col-h">40</div>
+          <div class="col-h">Borderless</div>
+          <div class="col-h">Border</div>
+          <div class="col-h">Filled</div>
+          <div class="col-h">Disabled</div>
 
-          <div class="row-h">Borderless</div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-20 light borderless" aria-label="plus">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-24 light borderless" aria-label="plus">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-28 light borderless" aria-label="plus">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-32 light borderless" aria-label="plus">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-36 light borderless" aria-label="plus">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-40 light borderless" aria-label="plus">__ICON__</button></div>
-
-          <div class="row-h">Border</div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-20 light border" aria-label="plus">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-24 light border" aria-label="plus">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-28 light border" aria-label="plus">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-32 light border" aria-label="plus">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-36 light border" aria-label="plus">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-40 light border" aria-label="plus">__ICON__</button></div>
-
-          <div class="row-h">Filled</div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-20 light filled" aria-label="plus">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-24 light filled" aria-label="plus">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-28 light filled" aria-label="plus">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-32 light filled" aria-label="plus">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-36 light filled" aria-label="plus">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-40 light filled" aria-label="plus">__ICON__</button></div>
-
-          <div class="row-h">Disabled</div>
+          <div class="icbtn-row-h"><span class="sz">20px</span><span class="spec">r4 · icon 12</span></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-20 light borderless">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-20 light border">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-20 light filled">__ICON__</button></div>
           <div class="icbtn-cell"><button class="icbtn icbtn-20 light borderless" disabled>__ICON__</button></div>
+
+          <div class="icbtn-row-h"><span class="sz">24px</span><span class="spec">r4 · icon 12</span></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-24 light borderless">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-24 light border">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-24 light filled">__ICON__</button></div>
           <div class="icbtn-cell"><button class="icbtn icbtn-24 light border" disabled>__ICON__</button></div>
+
+          <div class="icbtn-row-h"><span class="sz">28px</span><span class="spec">r4 · icon 14</span></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-28 light borderless">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-28 light border">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-28 light filled">__ICON__</button></div>
           <div class="icbtn-cell"><button class="icbtn icbtn-28 light filled" disabled>__ICON__</button></div>
+
+          <div class="icbtn-row-h"><span class="sz">32px</span><span class="spec">r4 · icon 18</span></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-32 light borderless">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-32 light border">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-32 light filled">__ICON__</button></div>
           <div class="icbtn-cell"><button class="icbtn icbtn-32 light borderless" disabled>__ICON__</button></div>
+
+          <div class="icbtn-row-h"><span class="sz">36px</span><span class="spec">r6 · icon 20</span></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-36 light borderless">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-36 light border">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-36 light filled">__ICON__</button></div>
           <div class="icbtn-cell"><button class="icbtn icbtn-36 light border" disabled>__ICON__</button></div>
+
+          <div class="icbtn-row-h"><span class="sz">40px</span><span class="spec">r8 · icon 24</span></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-40 light borderless">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-40 light border">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-40 light filled">__ICON__</button></div>
           <div class="icbtn-cell"><button class="icbtn icbtn-40 light filled" disabled>__ICON__</button></div>
         </div>
-        <div class="icbtn-spec">
-          <div><b>20 · r4</b>icon 12</div>
-          <div><b>24 · r4</b>icon 12</div>
-          <div><b>28 · r4</b>icon 14</div>
-          <div><b>32 · r4</b>icon 18</div>
-          <div><b>36 · r6</b>icon 20</div>
-          <div><b>40 · r8</b>icon 24</div>
-        </div>
-        <div class="caption" style="margin-top:14px">Square hit target. Radius: 20/24/28/32 → 4 · 36 → 6 · 40 → 8. Default type <b>borderless</b>. Hover uses <span class="mono">HoverOpacity_1</span> (GRAY_5 · 20%).</div>
+        <div class="caption" style="margin-top:14px">Default type <b>borderless</b>. Hover uses <span class="mono">HoverOpacity_1</span> (GRAY_5 · 20%).</div>
       </div>
 
       <div class="subhead">Icon Button · Dark mode</div>
       <div class="card" style="background: var(--gray-10); border-color: transparent;">
           <div class="icbtn-grid">
           <div></div>
-          <div class="col-h" style="color:var(--gray-5)">20</div>
-          <div class="col-h" style="color:var(--gray-5)">24</div>
-          <div class="col-h" style="color:var(--gray-5)">28</div>
-          <div class="col-h" style="color:var(--gray-5)">32</div>
-          <div class="col-h" style="color:var(--gray-5)">36</div>
-          <div class="col-h" style="color:var(--gray-5)">40</div>
+          <div class="col-h" style="color:var(--gray-5)">Borderless</div>
+          <div class="col-h" style="color:var(--gray-5)">Border</div>
+          <div class="col-h" style="color:var(--gray-5)">Filled</div>
+          <div class="col-h" style="color:var(--gray-5)">Disabled</div>
 
-          <div class="row-h" style="color:var(--gray-5)">Borderless</div>
+          <div class="icbtn-row-h"><span class="sz" style="color:var(--gray-4)">20px</span><span class="spec">r4 · icon 12</span></div>
           <div class="icbtn-cell"><button class="icbtn icbtn-20 dark borderless">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-24 dark borderless">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-28 dark borderless">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-32 dark borderless">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-36 dark borderless">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-40 dark borderless">__ICON__</button></div>
-
-          <div class="row-h" style="color:var(--gray-5)">Border</div>
           <div class="icbtn-cell"><button class="icbtn icbtn-20 dark border">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-24 dark border">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-28 dark border">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-32 dark border">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-36 dark border">__ICON__</button></div>
-          <div class="icbtn-cell"><button class="icbtn icbtn-40 dark border">__ICON__</button></div>
-
-          <div class="row-h" style="color:var(--gray-5)">Filled</div>
           <div class="icbtn-cell"><button class="icbtn icbtn-20 dark filled">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-20 dark borderless" disabled>__ICON__</button></div>
+
+          <div class="icbtn-row-h"><span class="sz" style="color:var(--gray-4)">24px</span><span class="spec">r4 · icon 12</span></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-24 dark borderless">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-24 dark border">__ICON__</button></div>
           <div class="icbtn-cell"><button class="icbtn icbtn-24 dark filled">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-24 dark border" disabled>__ICON__</button></div>
+
+          <div class="icbtn-row-h"><span class="sz" style="color:var(--gray-4)">28px</span><span class="spec">r4 · icon 14</span></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-28 dark borderless">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-28 dark border">__ICON__</button></div>
           <div class="icbtn-cell"><button class="icbtn icbtn-28 dark filled">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-28 dark filled" disabled>__ICON__</button></div>
+
+          <div class="icbtn-row-h"><span class="sz" style="color:var(--gray-4)">32px</span><span class="spec">r4 · icon 18</span></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-32 dark borderless">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-32 dark border">__ICON__</button></div>
           <div class="icbtn-cell"><button class="icbtn icbtn-32 dark filled">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-32 dark borderless" disabled>__ICON__</button></div>
+
+          <div class="icbtn-row-h"><span class="sz" style="color:var(--gray-4)">36px</span><span class="spec">r6 · icon 20</span></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-36 dark borderless">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-36 dark border">__ICON__</button></div>
           <div class="icbtn-cell"><button class="icbtn icbtn-36 dark filled">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-36 dark border" disabled>__ICON__</button></div>
+
+          <div class="icbtn-row-h"><span class="sz" style="color:var(--gray-4)">40px</span><span class="spec">r8 · icon 24</span></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-40 dark borderless">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-40 dark border">__ICON__</button></div>
           <div class="icbtn-cell"><button class="icbtn icbtn-40 dark filled">__ICON__</button></div>
+          <div class="icbtn-cell"><button class="icbtn icbtn-40 dark filled" disabled>__ICON__</button></div>
         </div>
       </div>
 
@@ -1139,18 +1396,66 @@
     <!-- ============ TABS & SWITCHTABS ============ -->
     <section id="tabs-switches">
       <div class="section-head">
-        <h2>Tabs & Switch-tabs</h2><span class="tag">N_TabStyle1/2 · N_SwitchTab</span>
-        <p>Tabs use GRAY_5 idle → GRAY_9 active with underline. Active counts always turn PURPLE_6.</p>
+        <h2>Tabs & Switch-tabs</h2><span class="tag">N_TabStyle1/2 · N_SwitchTab · N_TabStepCount</span>
+        <p>비활성 GRAY_5 → 활성 GRAY_9 언더라인. 카운트는 항상 PURPLE_6.</p>
       </div>
 
-      <div class="subhead">Underlined tabs</div>
-      <div class="card" style="padding:0 24px 24px">
+      <div class="subhead">Tab Style 1 — 16px (대형 탭)</div>
+      <div class="card" style="padding:0 24px 0">
+        <div class="tabs">
+          <div class="tab active" style="font-size:16px;padding:14px 0 18px">전체 <span class="count">128</span></div>
+          <div class="tab" style="font-size:16px;padding:14px 0 18px">서류 검토 <span class="count">42</span></div>
+          <div class="tab" style="font-size:16px;padding:14px 0 18px">면접 <span class="count">18</span></div>
+          <div class="tab" style="font-size:16px;padding:14px 0 18px">합격 <span class="count">7</span></div>
+          <div class="tab" style="font-size:16px;padding:14px 0 18px">불합격</div>
+        </div>
+      </div>
+
+      <div class="subhead">Tab Style 2 — Size 50 (기본)</div>
+      <div class="card" style="padding:0 24px 0">
         <div class="tabs">
           <div class="tab active">전체 <span class="count">128</span></div>
           <div class="tab">서류 검토 <span class="count">42</span></div>
           <div class="tab">면접 <span class="count">18</span></div>
           <div class="tab">합격 <span class="count">7</span></div>
           <div class="tab">불합격</div>
+        </div>
+      </div>
+
+      <div class="subhead">Tab Style 2 — Size 42</div>
+      <div class="card" style="padding:0 24px 0">
+        <div class="tabs">
+          <div class="tab s42 active">전체 <span class="count">128</span></div>
+          <div class="tab s42">서류 검토 <span class="count">42</span></div>
+          <div class="tab s42">면접 <span class="count">18</span></div>
+          <div class="tab s42">합격 <span class="count">7</span></div>
+        </div>
+      </div>
+
+      <div class="subhead">Tab Style 2 — Size 36</div>
+      <div class="card" style="padding:0 24px 0">
+        <div class="tabs">
+          <div class="tab s36 active">전체 <span class="count">128</span></div>
+          <div class="tab s36">서류 검토 <span class="count">42</span></div>
+          <div class="tab s36">면접 <span class="count">18</span></div>
+          <div class="tab s36">합격 <span class="count">7</span></div>
+        </div>
+      </div>
+
+      <div class="subhead">Tab Step Counter (N_TabStepCount)</div>
+      <div class="card">
+        <div class="row" style="gap:24px">
+          <div class="tab-step-row">
+            <div class="tab-step done">1</div>
+            <div class="tab-step active">2</div>
+            <div class="tab-step default">3</div>
+            <div class="tab-step default">4</div>
+          </div>
+          <div class="stack" style="gap:8px;font-size:12px;color:var(--gray-6)">
+            <div><span class="tab-step done" style="margin-right:6px">✓</span>done — PURPLE_1 bg · PURPLE_6 text</div>
+            <div><span class="tab-step active" style="margin-right:6px">2</span>active — PURPLE_6 bg · white text</div>
+            <div><span class="tab-step default" style="margin-right:6px">3</span>default — GRAY_4 bg · white text</div>
+          </div>
         </div>
       </div>
 
@@ -1201,19 +1506,99 @@
     <!-- ============ AVATARS ============ -->
     <section id="avatars">
       <div class="section-head">
-        <h2>Avatars</h2><span class="tag">N_UserAvatar · N_Avatar</span>
-        <p>Circular, with a 1px GRAY_3 outline. Fallback renders the first character of the user's name on a brand-colored fill.</p>
+        <h2>Avatars</h2><span class="tag">N_Avatar · N_UserAvatarGroup · N_Chips</span>
+        <p>Rounded rectangle. 사이즈별 radius 고정값. 타입에 따라 배경색·텍스트 처리 방식이 다름.</p>
       </div>
 
+      <div class="subhead">Word Avatar — 사이즈 전체</div>
       <div class="card">
         <div class="avatar-row">
-          <div class="avatar-item"><div class="avatar a-16" style="background:#6643FF">김</div><div class="lbl">16</div></div>
-          <div class="avatar-item"><div class="avatar a-20" style="background:#DA3A2D">이</div><div class="lbl">20</div></div>
-          <div class="avatar-item"><div class="avatar a-24" style="background:#138748">박</div><div class="lbl">24</div></div>
-          <div class="avatar-item"><div class="avatar a-32" style="background:#1787ee">최</div><div class="lbl">32</div></div>
-          <div class="avatar-item"><div class="avatar a-40" style="background:#9060EE">정</div><div class="lbl">40</div></div>
-          <div class="avatar-item"><div class="avatar a-56" style="background:#EE7843">윤</div><div class="lbl">56</div></div>
+          <div class="avatar-item"><div class="avatar word a-72">김</div><div class="lbl">72</div><div class="sub">r24</div></div>
+          <div class="avatar-item"><div class="avatar word a-64">이</div><div class="lbl">64</div><div class="sub">r16</div></div>
+          <div class="avatar-item"><div class="avatar word a-40">박</div><div class="lbl">40</div><div class="sub">r14</div></div>
+          <div class="avatar-item"><div class="avatar word a-32">최</div><div class="lbl">32</div><div class="sub">r12</div></div>
+          <div class="avatar-item"><div class="avatar word a-28">정</div><div class="lbl">28</div><div class="sub">r8</div></div>
+          <div class="avatar-item"><div class="avatar word a-24">윤</div><div class="lbl">24</div><div class="sub">r8</div></div>
+          <div class="avatar-item"><div class="avatar word a-20">강</div><div class="lbl">20</div><div class="sub">r6</div></div>
+          <div class="avatar-item"><div class="avatar word a-16">조</div><div class="lbl">16</div><div class="sub">r5</div></div>
+          <div class="avatar-item"><div class="avatar word a-10">한</div><div class="lbl">10</div><div class="sub">r3</div></div>
         </div>
+      </div>
+
+      <div class="subhead">타입별 비교 (size 40)</div>
+      <div class="card">
+        <div class="avatar-row">
+          <div class="avatar-item">
+            <div class="avatar word a-40">김</div>
+            <div class="lbl">Word</div>
+            <div class="sub">PG_7 bg</div>
+          </div>
+          <div class="avatar-item">
+            <div class="avatar user a-40" style="font-size:11px;letter-spacing:-0.3px">사진</div>
+            <div class="lbl">User</div>
+            <div class="sub">이미지</div>
+          </div>
+          <div class="avatar-item">
+            <div class="avatar group a-40" style="font-size:13px">팀</div>
+            <div class="lbl">Group</div>
+            <div class="sub">Calendar</div>
+          </div>
+          <div class="avatar-item">
+            <div class="avatar a-40" style="background:var(--gray-2);color:var(--gray-5);font-size:20px">+</div>
+            <div class="lbl">Add</div>
+            <div class="sub">GRAY_2</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subhead">UserAvatarGroup — 사이즈 (N_UserAvatarGroup)</div>
+      <div class="card">
+        <div class="stack" style="gap:16px">
+          <div class="row" style="gap:32px;align-items:flex-end">
+            <div class="avatar-item">
+              <div class="avatar-group-wrap">
+                <div class="avatar-stack">
+                  <div class="avatar word a-32" style="z-index:3">김</div>
+                  <div class="avatar word a-32" style="background:var(--blue-6);z-index:2">이</div>
+                  <div class="avatar word a-32" style="background:var(--green-6);z-index:1">박</div>
+                </div>
+                <span style="font-size:14px;font-weight:700;color:var(--gray-9)">3</span>
+              </div>
+              <div class="lbl">Size 40</div><div class="sub">avatar 32</div>
+            </div>
+            <div class="avatar-item">
+              <div class="avatar-group-wrap">
+                <div class="avatar-stack">
+                  <div class="avatar word a-24" style="z-index:3">김</div>
+                  <div class="avatar word a-24" style="background:var(--blue-6);z-index:2">이</div>
+                </div>
+                <span style="font-size:13px;font-weight:700;color:var(--gray-9)">2</span>
+              </div>
+              <div class="lbl">Size 36</div><div class="sub">avatar 24</div>
+            </div>
+            <div class="avatar-item">
+              <div class="avatar-group-wrap">
+                <div class="avatar-stack">
+                  <div class="avatar word a-20" style="z-index:2">김</div>
+                  <div class="avatar word a-20" style="background:var(--blue-6);z-index:1">이</div>
+                </div>
+                <span style="font-size:12px;font-weight:700;color:var(--gray-9)">2</span>
+              </div>
+              <div class="lbl">Size 28/20</div><div class="sub">avatar 20</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subhead">Chips (N_Chips)</div>
+      <div class="card">
+        <div class="row" style="flex-wrap:wrap;gap:8px">
+          <div class="chip"><span class="chip-text">프론트엔드</span><button class="chip-del">×</button></div>
+          <div class="chip"><span class="chip-text">시니어 3년+</span><button class="chip-del">×</button></div>
+          <div class="chip"><span class="chip-text">서울</span><button class="chip-del">×</button></div>
+          <div class="chip"><span class="chip-text">React</span><button class="chip-del">×</button></div>
+        </div>
+        <div class="caption" style="margin-top:12px">height 28px · border GRAY_3 · hover HoverOpacity_1 · 삭제 버튼 N_IconButton size 20</div>
       </div>
     </section>
 
@@ -1319,37 +1704,107 @@
   Object.entries(PALETTES).forEach(([id, p]) => {
     const el = document.getElementById(id);
     if (!el) return;
-    const label = document.createElement('div');
-    label.className = 'swatch-label';
-    label.style.gridColumn = 'span 1';
-    label.style.alignSelf = 'center';
-    label.innerHTML = '<div style="font-weight:700;color:var(--gray-9);font-size:12px">'+p.name+'</div><div class="swatch-hex">10 → 1</div>';
-    el.appendChild(label);
     p.steps.forEach((hex, i) => {
       const step = 10 - i;
       const sw = document.createElement('div');
       sw.className = 'swatch';
-      const textOn = step >= 6 ? '#FFFFFF' : 'var(--gray-9)';
       sw.innerHTML = `
-        <div class="swatch-chip" style="background:${hex}">
-          <div style="height:100%;display:flex;align-items:flex-end;justify-content:flex-end;padding:6px;font-size:10px;font-weight:700;color:${textOn};font-family:'SF Mono',Menlo,monospace">${step}</div>
-        </div>
+        <div class="swatch-chip" style="background:${hex}" data-hex="${hex.toUpperCase()}" data-name="${p.name}-${step}"></div>
+        <div class="swatch-label">${step}</div>
         <div class="swatch-hex">${hex.toUpperCase()}</div>`;
       el.appendChild(sw);
     });
   });
 
-  // Active-section highlighting in sidebar
-  const navLinks = document.querySelectorAll('.nav a');
-  const sections = [...document.querySelectorAll('section[id]')];
-  const onScroll = () => {
-    const y = window.scrollY + 80;
-    let current = sections[0]?.id;
-    for (const s of sections) if (s.offsetTop <= y) current = s.id;
-    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+  // Copy-to-clipboard for color chips
+  const toast = document.createElement('div');
+  toast.className = 'copy-toast';
+  document.body.appendChild(toast);
+  let toastTimer;
+  function copyText(text) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).catch(() => {});
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+    }
+  }
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+  }
+  document.addEventListener('click', e => {
+    const chip = e.target.closest('[data-hex]');
+    if (!chip) return;
+    copyText(chip.dataset.hex);
+    showToast(chip.dataset.hex + ' / ' + chip.dataset.name + ' 이 복사되었습니다.');
+  });
+
+  // Hash-based page navigation
+  function showPage(hash) {
+    const id = (hash || '').replace('#', '') || 'colors';
+    document.querySelectorAll('section[id]').forEach(s => s.classList.remove('page-active'));
+    document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
+    let section = document.getElementById(id);
+    if (!section || section.tagName !== 'SECTION') {
+      const el = document.getElementById(id);
+      section = el ? el.closest('section[id]') : document.getElementById('colors');
+    }
+    if (section) {
+      section.classList.add('page-active');
+      document.querySelectorAll(`.nav a[href="#${section.id}"], .nav a[href="#${id}"]`)
+        .forEach(a => a.classList.add('active'));
+    }
+  }
+  document.querySelectorAll('.nav a').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const hash = link.getAttribute('href');
+      history.pushState(null, '', hash);
+      showPage(hash);
+    });
+  });
+  window.addEventListener('hashchange', () => showPage(location.hash));
+  showPage(location.hash);
+
+  // Theme showcase toggle
+  const LIGHT_TOKENS = {
+    'text-title': '#343B46', 'text-primary': '#505766', 'text-secondary': '#6D7584',
+    'text-tertiary': '#8B93A1', 'text-placeholder': '#AFB5C2',
+    'bg-primary': '#FFFFFF', 'bg-secondary': '#F9F9FB', 'bg-tertiary': '#F2F3F6',
+    'border-primary': '#E4E7EC', 'border-focused': '#AFB5C2',
   };
-  document.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  const DARK_TOKENS = {
+    'text-title': '#F9F9FB', 'text-primary': '#D0D5DC', 'text-secondary': '#AFB5C2',
+    'text-tertiary': '#6D7584', 'text-placeholder': '#505766',
+    'bg-primary': '#1B212C', 'bg-secondary': '#22293A', 'bg-tertiary': '#293042',
+    'border-primary': '#343B46', 'border-focused': '#6D7584',
+  };
+  function applyTheme(mode) {
+    const canvas = document.getElementById('theme-canvas');
+    if (!canvas) return;
+    canvas.setAttribute('data-mode', mode);
+    const tokens = mode === 'dark' ? DARK_TOKENS : LIGHT_TOKENS;
+    canvas.querySelectorAll('.theme-token-chip[data-token]').forEach(chip => {
+      const val = tokens[chip.dataset.token];
+      if (val) chip.style.background = val;
+    });
+  }
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', e => {
+      const btn = e.target.closest('.theme-btn');
+      if (!btn) return;
+      themeToggle.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyTheme(btn.dataset.theme);
+    });
+    applyTheme('light');
+  }
 
   // SwitchTab demo interaction
   const st = document.getElementById('switchtab-demo');
