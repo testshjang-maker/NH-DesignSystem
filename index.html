@@ -1736,75 +1736,114 @@
     <section id="tooltip">
       <div class="section-head">
         <h2>Tooltip</h2><span class="tag">N_Tooltip · N_Arrowless</span>
-        <p>기본 배치 bottom. black(dark bg, white 12px) / white(white bg, GRAY_9 bold 12px). N_Arrowless는 화살표 없는 black 변형.</p>
+        <p>기본 배치 bottom. 툴팁 ↔ 타겟 간격 6px. black / white / arrowless 세 가지 변형.</p>
       </div>
 
-      <div class="subhead">Color 변형</div>
+      <div class="subhead">Black — dark bg, white 12px</div>
       <div class="card">
-        <div class="tooltip-demo-wrap">
+        <div class="tooltip-demo-wrap" style="align-items:center">
           <div class="tooltip-item">
-            <div class="lbl">black (default)</div>
             <div class="tooltip-bubble black arrow-bottom">작업을 완료했습니다</div>
-            <div style="height:12px"></div><!-- arrow 6px + gap 6px -->
+            <div style="height:12px"></div>
             <div class="tooltip-trigger">hover target</div>
           </div>
           <div class="tooltip-item">
-            <div class="lbl">white</div>
-            <div class="tooltip-bubble white arrow-bottom">상세 정보 보기</div>
-            <div style="height:12px"></div><!-- arrow 6px + gap 6px -->
+            <div class="tooltip-bubble black arrow-top" style="margin-top:12px">더 많은 내용</div>
+            <div class="tooltip-trigger" style="margin-bottom:12px">hover target</div>
+          </div>
+          <div class="tooltip-item" style="flex-direction:row;gap:0;align-items:center">
+            <div class="tooltip-bubble black arrow-right">좌측 배치</div>
+            <div style="width:12px"></div>
+            <div class="tooltip-trigger">hover</div>
+          </div>
+          <div class="tooltip-item" style="flex-direction:row;gap:0;align-items:center">
+            <div class="tooltip-trigger">hover</div>
+            <div style="width:12px"></div>
+            <div class="tooltip-bubble black arrow-left">우측 배치</div>
+          </div>
+        </div>
+        <div class="caption" style="margin-top:16px">background #2B313D · color WHITE · font-size 12px · border-radius 8px · 화살표 ↔ 타겟 6px</div>
+      </div>
+
+      <div class="subhead">White — light bg, GRAY_9 bold 12px</div>
+      <div class="card">
+        <div class="tooltip-demo-wrap" style="align-items:center">
+          <div class="tooltip-item">
+            <div class="tooltip-bubble white arrow-bottom">작업을 완료했습니다</div>
+            <div style="height:12px"></div>
             <div class="tooltip-trigger">hover target</div>
           </div>
           <div class="tooltip-item">
-            <div class="lbl">arrowless (N_Arrowless)</div>
-            <div class="tooltip-bubble black">화살표 없음</div>
-            <div style="height:6px"></div><!-- gap 6px (화살표 없음) -->
+            <div class="tooltip-bubble white arrow-top" style="margin-top:12px">더 많은 내용</div>
+            <div class="tooltip-trigger" style="margin-bottom:12px">hover target</div>
+          </div>
+          <div class="tooltip-item" style="flex-direction:row;gap:0;align-items:center">
+            <div class="tooltip-bubble white arrow-right">좌측 배치</div>
+            <div style="width:12px"></div>
+            <div class="tooltip-trigger">hover</div>
+          </div>
+          <div class="tooltip-item" style="flex-direction:row;gap:0;align-items:center">
+            <div class="tooltip-trigger">hover</div>
+            <div style="width:12px"></div>
+            <div class="tooltip-bubble white arrow-left">우측 배치</div>
+          </div>
+        </div>
+        <div class="caption" style="margin-top:16px">background WHITE · color GRAY_9 · font-weight 700 · font-size 12px · border GRAY_3 · shadow-2 · 화살표 ↔ 타겟 6px</div>
+      </div>
+
+      <div class="subhead">Arrowless — N_Arrowless, 화살표 없음</div>
+      <div class="card">
+        <div class="tooltip-demo-wrap" style="align-items:center">
+          <div class="tooltip-item">
+            <div class="tooltip-bubble black">작업을 완료했습니다</div>
+            <div style="height:6px"></div>
+            <div class="tooltip-trigger">hover target</div>
+          </div>
+          <div class="tooltip-item">
+            <div class="tooltip-bubble black">더 많은 내용</div>
+            <div style="height:6px"></div>
             <div class="tooltip-trigger">hover target</div>
           </div>
         </div>
-        <div class="caption" style="margin-top:16px">black: GRAY_10 bg, WHITE 12px · white: WHITE bg, GRAY_9 bold 12px, border+shadow · arrowless: showArrow=false, always black · 툴팁 ↔ 타겟 간격 6px</div>
+        <div class="caption" style="margin-top:16px">showArrow=false · 항상 black · default placement bottom · 툴팁 ↔ 타겟 6px</div>
       </div>
 
-      <div class="subhead">Placement 변형 (N_Tooltip)</div>
+      <div class="subhead">Placement offset 값</div>
       <div class="card">
         <div class="tooltip-placement-grid">
-          <!-- top: tooltip above, arrow pointing down from bubble bottom toward trigger -->
           <div class="tooltip-placement-item">
             <div class="pl-label">placement="top"</div>
             <div class="tooltip-bubble black arrow-bottom">툴팁입니다.</div>
-            <div style="height:12px"></div><!-- arrow 6px + gap 6px -->
+            <div style="height:12px"></div>
             <div class="tooltip-trigger">hover target</div>
-            <div class="pl-label" style="color:var(--gray-5)">offset [0, -12]</div>
+            <div class="pl-label" style="color:var(--gray-5);margin-top:4px">offset [0, -12]</div>
           </div>
-          <!-- bottom: tooltip below, arrow pointing up from bubble top toward trigger -->
           <div class="tooltip-placement-item">
             <div class="pl-label">placement="bottom"</div>
             <div class="tooltip-trigger">hover target</div>
-            <div style="height:12px"></div><!-- arrow 6px + gap 6px -->
+            <div style="height:12px"></div>
             <div class="tooltip-bubble black arrow-top">툴팁입니다.</div>
-            <div class="pl-label" style="color:var(--gray-5)">offset [0, 15]</div>
+            <div class="pl-label" style="color:var(--gray-5);margin-top:4px">offset [0, 15]</div>
           </div>
-          <!-- left: tooltip to the left, arrow pointing right toward trigger -->
           <div class="tooltip-placement-item" style="flex-direction:row;gap:0;align-items:center">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
               <div class="pl-label">placement="left"</div>
               <div class="tooltip-bubble black arrow-right">툴팁입니다.</div>
               <div class="pl-label" style="color:var(--gray-5)">offset [-13, -1]</div>
             </div>
-            <div style="width:12px"></div><!-- arrow 6px + gap 6px -->
+            <div style="width:12px"></div>
             <div class="tooltip-trigger">hover</div>
           </div>
-          <!-- right: tooltip to the right, arrow pointing left toward trigger -->
           <div class="tooltip-placement-item" style="flex-direction:row;gap:0;align-items:center">
             <div class="tooltip-trigger">hover</div>
-            <div style="width:12px"></div><!-- arrow 6px + gap 6px -->
-            <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+            <div style="width:12px"></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
               <div class="pl-label">placement="right"</div>
               <div class="tooltip-bubble black arrow-left">툴팁입니다.</div>
               <div class="pl-label" style="color:var(--gray-5)">offset [13, -1]</div>
             </div>
           </div>
         </div>
-        <div class="caption">툴팁 ↔ 타겟 간격 6px (화살표 6px + 여백 6px = spacer 12px) · top: [0,-12] · bottom: [0,15] · left: [-13,-1] · right: [13,-1]</div>
       </div>
     </section>
 
