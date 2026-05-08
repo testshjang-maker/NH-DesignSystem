@@ -828,37 +828,58 @@
 
   /* ---------- Tooltip ---------- */
   .tooltip-demo-wrap {
-    display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start;
+    display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start;
   }
   .tooltip-item {
-    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
   }
   .tooltip-item .lbl { font-size: 11px; color: var(--gray-6); font-family: 'SF Mono', Menlo, monospace; }
+
+  /* Base bubble */
   .tooltip-bubble {
-    position: relative; padding: 6px 10px; border-radius: 6px;
-    font-size: 12px; white-space: nowrap;
+    position: relative; padding: 8px 14px; border-radius: 8px;
+    font-size: 12px; white-space: nowrap; line-height: 1.4;
   }
-  .tooltip-bubble.black { background: var(--gray-10); color: #fff; }
+  .tooltip-bubble.black { background: #2B313D; color: #fff; }
   .tooltip-bubble.white { background: var(--white); color: var(--gray-9); font-weight: 700; border: 1px solid var(--border-primary); box-shadow: var(--shadow-2); }
-  .tooltip-arrow {
-    position: absolute; width: 10px; height: 10px;
-    transform: rotate(45deg);
+
+  /* Arrow using ::after with border-trick triangles */
+  .tooltip-bubble::after {
+    content: ''; position: absolute;
+    width: 0; height: 0; border: 6px solid transparent;
   }
-  .tooltip-bubble.black .tooltip-arrow { background: var(--gray-10); }
-  .tooltip-bubble.white .tooltip-arrow { background: var(--white); border: 1px solid var(--border-primary); }
-  /* Arrow directions */
-  .tooltip-bubble.arrow-bottom .tooltip-arrow { bottom: -5px; left: 50%; margin-left: -5px; }
-  .tooltip-bubble.white.arrow-bottom .tooltip-arrow { border-top: none; border-left: none; }
-  .tooltip-bubble.black.arrow-bottom .tooltip-arrow { clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%); }
-  .tooltip-bubble.arrow-top .tooltip-arrow { top: -5px; left: 50%; margin-left: -5px; }
-  .tooltip-bubble.black.arrow-top .tooltip-arrow { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
-  .tooltip-bubble.white.arrow-top .tooltip-arrow { border-bottom: none; border-right: none; }
-  .tooltip-bubble.arrow-left .tooltip-arrow { left: -5px; top: 50%; margin-top: -5px; }
-  .tooltip-bubble.black.arrow-left .tooltip-arrow { clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%); }
-  .tooltip-bubble.white.arrow-left .tooltip-arrow { border-right: none; border-bottom: none; }
-  .tooltip-bubble.arrow-right .tooltip-arrow { right: -5px; top: 50%; margin-top: -5px; }
-  .tooltip-bubble.black.arrow-right .tooltip-arrow { clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%); }
-  .tooltip-bubble.white.arrow-right .tooltip-arrow { border-left: none; border-top: none; }
+  /* arrow-bottom: arrow points DOWN at bottom center */
+  .tooltip-bubble.arrow-bottom::after {
+    bottom: -12px; left: 50%; transform: translateX(-50%);
+    border-top-color: #2B313D; border-bottom: none;
+  }
+  .tooltip-bubble.white.arrow-bottom::after {
+    border-top-color: var(--white);
+  }
+  /* arrow-top: arrow points UP at top center */
+  .tooltip-bubble.arrow-top::after {
+    top: -12px; left: 50%; transform: translateX(-50%);
+    border-bottom-color: #2B313D; border-top: none;
+  }
+  .tooltip-bubble.white.arrow-top::after {
+    border-bottom-color: var(--white);
+  }
+  /* arrow-left: arrow points LEFT from left side */
+  .tooltip-bubble.arrow-left::after {
+    left: -12px; top: 50%; transform: translateY(-50%);
+    border-right-color: #2B313D; border-left: none;
+  }
+  .tooltip-bubble.white.arrow-left::after {
+    border-right-color: var(--white);
+  }
+  /* arrow-right: arrow points RIGHT from right side */
+  .tooltip-bubble.arrow-right::after {
+    right: -12px; top: 50%; transform: translateY(-50%);
+    border-left-color: #2B313D; border-right: none;
+  }
+  .tooltip-bubble.white.arrow-right::after {
+    border-left-color: var(--white);
+  }
 
   .tooltip-trigger {
     display: inline-flex; align-items: center; justify-content: center;
@@ -867,11 +888,11 @@
     font-size: 13px; color: var(--gray-8); cursor: default;
   }
   .tooltip-placement-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px 24px;
-    padding: 40px 24px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 24px;
+    padding: 48px 24px;
   }
   .tooltip-placement-item {
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
   }
   .tooltip-placement-item .pl-label { font-size: 11px; color: var(--gray-6); font-family: 'SF Mono', Menlo, monospace; }
 
@@ -1723,31 +1744,20 @@
         <div class="tooltip-demo-wrap">
           <div class="tooltip-item">
             <div class="lbl">black (default)</div>
-            <div style="position:relative;display:inline-block">
-              <div class="tooltip-bubble black arrow-bottom">
-                작업을 완료했습니다
-                <div class="tooltip-arrow"></div>
-              </div>
-            </div>
+            <div class="tooltip-bubble black arrow-bottom">작업을 완료했습니다</div>
+            <div style="height:14px"></div>
             <div class="tooltip-trigger">hover target</div>
           </div>
           <div class="tooltip-item">
             <div class="lbl">white</div>
-            <div style="position:relative;display:inline-block">
-              <div class="tooltip-bubble white arrow-bottom">
-                상세 정보 보기
-                <div class="tooltip-arrow"></div>
-              </div>
-            </div>
+            <div class="tooltip-bubble white arrow-bottom">상세 정보 보기</div>
+            <div style="height:14px"></div>
             <div class="tooltip-trigger">hover target</div>
           </div>
           <div class="tooltip-item">
             <div class="lbl">arrowless (N_Arrowless)</div>
-            <div style="position:relative;display:inline-block">
-              <div class="tooltip-bubble black" style="border-radius:6px">
-                화살표 없음
-              </div>
-            </div>
+            <div class="tooltip-bubble black">화살표 없음</div>
+            <div style="height:26px"></div>
             <div class="tooltip-trigger">hover target</div>
           </div>
         </div>
@@ -1757,31 +1767,40 @@
       <div class="subhead">Placement 변형 (N_Tooltip)</div>
       <div class="card">
         <div class="tooltip-placement-grid">
+          <!-- top: tooltip above, arrow pointing down from bubble bottom toward trigger -->
           <div class="tooltip-placement-item">
-            <div class="tooltip-bubble black arrow-top" style="margin-bottom:4px">
-              top placement<div class="tooltip-arrow"></div>
-            </div>
-            <div class="tooltip-trigger">▲ top</div>
-            <div class="pl-label">offset [0, -12]</div>
+            <div class="pl-label">placement="top"</div>
+            <div class="tooltip-bubble black arrow-bottom">툴팁입니다.</div>
+            <div style="height:14px"></div>
+            <div class="tooltip-trigger">hover target</div>
+            <div class="pl-label" style="color:var(--gray-5)">offset [0, -12]</div>
           </div>
+          <!-- bottom: tooltip below, arrow pointing up from bubble top toward trigger -->
           <div class="tooltip-placement-item">
-            <div class="tooltip-trigger" style="margin-bottom:4px">▼ bottom</div>
-            <div class="tooltip-bubble black arrow-bottom">
-              bottom placement<div class="tooltip-arrow"></div>
-            </div>
-            <div class="pl-label">offset [0, 15]</div>
+            <div class="pl-label">placement="bottom"</div>
+            <div class="tooltip-trigger">hover target</div>
+            <div style="height:14px"></div>
+            <div class="tooltip-bubble black arrow-top">툴팁입니다.</div>
+            <div class="pl-label" style="color:var(--gray-5)">offset [0, 15]</div>
           </div>
-          <div class="tooltip-placement-item" style="flex-direction:row;align-items:center;gap:8px">
-            <div class="tooltip-bubble black arrow-right">
-              left<div class="tooltip-arrow"></div>
+          <!-- left: tooltip to the left, arrow pointing right toward trigger -->
+          <div class="tooltip-placement-item" style="flex-direction:row;gap:10px;align-items:center">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+              <div class="pl-label">placement="left"</div>
+              <div class="tooltip-bubble black arrow-right">툴팁입니다.</div>
+              <div class="pl-label" style="color:var(--gray-5)">offset [-13, -1]</div>
             </div>
-            <div class="tooltip-trigger">◀ left</div>
-            <div class="pl-label" style="display:none">offset [-13, -1]</div>
+            <div style="width:14px"></div>
+            <div class="tooltip-trigger">hover</div>
           </div>
-          <div class="tooltip-placement-item" style="flex-direction:row;align-items:center;gap:8px">
-            <div class="tooltip-trigger">right ▶</div>
-            <div class="tooltip-bubble black arrow-left">
-              right<div class="tooltip-arrow"></div>
+          <!-- right: tooltip to the right, arrow pointing left toward trigger -->
+          <div class="tooltip-placement-item" style="flex-direction:row;gap:10px;align-items:center">
+            <div class="tooltip-trigger">hover</div>
+            <div style="width:14px"></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+              <div class="pl-label">placement="right"</div>
+              <div class="tooltip-bubble black arrow-left">툴팁입니다.</div>
+              <div class="pl-label" style="color:var(--gray-5)">offset [13, -1]</div>
             </div>
           </div>
         </div>
